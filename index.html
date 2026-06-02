@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>القرآن الكريم | صدقة جارية</title>
-    <!-- خط أميري وجيران للعناوين والنصوص -->
+    <title>منصة القرآن الكريم | صدقة جارية</title>
+    <!-- الخطوط -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital@0;1&family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
-    <!-- مكتبة أيقونات FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital@0;1&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- الأيقونات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-color: #121814;
-            --card-bg: #1a231d;
-            --primary-color: #2e7d32;
-            --primary-hover: #388e3c;
-            --text-color: #e0e0e0;
-            --text-muted: #a0a0a0;
-            --accent-color: #c5a880;
+            --bg-dark: #0b0f0c;
+            --bg-surface: #131a15;
+            --bg-card: #1a241d;
+            --primary: #1b5e20;
+            --primary-light: #2e7d32;
+            --accent: #c5a880;
+            --text-main: #f5f5f5;
+            --text-muted: #9fa8a3;
         }
 
         * {
@@ -30,68 +31,184 @@
 
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             line-height: 1.8;
-            padding-bottom: 60px;
         }
 
-        .container {
+        /* شريط التنقل العلوي (Navigation Bar) */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(19, 26, 21, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(197, 168, 128, 0.1);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent);
+            text-decoration: none;
+            font-family: 'Amiri', serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-item a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-item a:hover, .nav-item a.active {
+            color: var(--accent);
+        }
+
+        /* القسم الترحيبي الرئيسي (Hero Section) */
+        .hero {
+            padding: 160px 0 80px 0;
+            background: radial-gradient(circle at center, rgba(46, 125, 50, 0.15) 0%, rgba(11, 15, 12, 0) 70%);
+            text-align: center;
+        }
+
+        .hero-container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
         }
 
-        /* الهيدر والترحيب */
-        header {
-            text-align: center;
-            padding: 40px 0 20px 0;
+        .hero i.quran-icon {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 20px;
         }
 
-        .logo-icon {
+        .hero h2 {
+            font-family: 'Amiri', serif;
             font-size: 3rem;
-            color: var(--accent-color);
+            color: var(--accent);
             margin-bottom: 15px;
         }
 
-        h1 {
-            font-family: 'Amiri', serif;
-            font-size: 2.5rem;
-            color: var(--accent-color);
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            font-size: 1.1rem;
+        .hero p {
             color: var(--text-muted);
-            max-width: 600px;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .btn-main {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--primary-light);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-main:hover {
+            background-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* قسم بطاقات أهداف المشروع */
+        .features {
+            padding: 60px 0;
+            background-color: var(--bg-surface);
+        }
+
+        .grid-container {
+            max-width: 1100px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 0 20px;
         }
 
-        .badge {
-            display: inline-block;
-            background-color: rgba(197, 168, 128, 0.15);
-            color: var(--accent-color);
-            padding: 5px 15px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            margin-top: 15px;
-            border: 1px solid rgba(197, 168, 128, 0.3);
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
         }
 
-        /* مشغل الفيديو */
-        .video-container {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 15px;
-            margin: 30px 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 1px solid rgba(46, 125, 50, 0.2);
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(197, 168, 128, 0.3);
+        }
+
+        .card i {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* قسم مشغل الميديا والقرآن */
+        .main-content {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 40px;
+        }
+
+        .video-box {
+            background-color: var(--bg-surface);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+            border: 1px solid rgba(197, 168, 128, 0.1);
         }
 
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* نسبة 16:9 */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             border-radius: 12px;
@@ -106,157 +223,88 @@
             border: none;
         }
 
-        .player-title {
-            font-size: 1.1rem;
-            margin-top: 15px;
-            text-align: center;
-            color: var(--text-color);
-        }
-        
-        .player-title span {
-            color: var(--accent-color);
-            display: block;
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
-
-        /* أزرار وسائل التواصل */
-        .links-section {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .btn-link {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            text-decoration: none;
-            padding: 18px 25px;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .btn-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            border-color: var(--accent-color);
-        }
-
-        .btn-link .right-side {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .btn-link i.brand-icon {
-            font-size: 1.6rem;
-            width: 30px;
-            text-align: center;
-        }
-
-        /* ألوان مخصصة لكل منصة عند الحوام فوقها */
-        .btn-youtube:hover i.brand-icon { color: #ff0000; }
-        .btn-telegram:hover i.brand-icon { color: #0088cc; }
-        .btn-whatsapp:hover i.brand-icon { color: #25d366; }
-
-        .btn-link i.arrow-icon {
-            font-size: 1rem;
-            color: var(--text-muted);
-            transition: transform 0.3s ease;
-        }
-
-        .btn-link:hover i.arrow-icon {
-            transform: translateX(-5px);
-            color: var(--accent-color);
-        }
-
         /* الفوتر */
         footer {
+            background-color: var(--bg-surface);
             text-align: center;
-            margin-top: 50px;
+            padding: 40px 20px;
             color: var(--text-muted);
             font-size: 0.9rem;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.02);
+            margin-top: 80px;
         }
 
-        footer i {
-            color: #d32f2f;
+        /* متوافق مع الهواتف */
+        @media (max-width: 768px) {
+            .nav-menu { display: none; } /* سنقوم بعمل قائمة هاتفية متحركة لاحقاً */
+            .hero h2 { font-size: 2.2rem; }
+            .hero p { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        
-        <!-- الهيدر والتعريف بالمشروع -->
-        <header>
-            <div class="logo-icon">
-                <i class="fa-solid fa-book-quran"></i>
-            </div>
-            <h1>القرآن الكريم</h1>
-            <p class="subtitle">مشروع رقمي لنشر آيات كتاب الله الحكيم لشتى بقاع الأرض، مترجمة ومتاحة للجميع للتدبر والاستماع.</p>
-            <span class="badge"><i class="fa-solid fa-heart shadow-sm me-1"></i> صدقة جارية</span>
-        </header>
+    <!-- شريط التنقل (Navbar) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <i class="fa-solid fa-book-quran"></i> المنصة الرقمية
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#" class="active">الرئيسية</a></li>
+                <li class="nav-item"><a href="#recitations">المصحف المرتل</a></li>
+                <li class="nav-item"><a href="#about">عن المشروع</a></li>
+                <li class="nav-item"><a href="#connect">منصاتنا</a></li>
+            </ul>
+        </div>
+    </nav>
 
-        <!-- مشغل قائمة تشغيل الشيخ محمد اللحيدان -->
-        <div class="video-container">
+    <!-- الواجهة الترحيبية (Hero Section) -->
+    <section class="hero">
+        <div class="hero-container">
+            <i class="fa-solid fa-heart-pulse quran-icon"></i>
+            <h2>القرآن الكريم | صدقة جارية</h2>
+            <p>مرحباً بك في المنصة الشاملة لنشر آيات الذكر الحكيم وترجماتها حول العالم. هدفنا تقريب كتاب الله لكل قلب بأسلوب رقمي حديث.</p>
+            <a href="#recitations" class="btn-main"><i class="fa-solid fa-play"></i> ابدأ الاستماع الآن</a>
+        </div>
+    </section>
+
+    <!-- قسم بطاقات مميزات المشروع (Features) -->
+    <section class="features" id="about">
+        <div class="grid-container">
+            <div class="card">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <h3>تلاوات خاشعة</h3>
+                <p>مصحف مرتل كامل بجودة صوتية عالية ومترجم لتجربة استماع وتدبر فريدة.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-share-nodes"></i>
+                <h3>انتشار واسع</h3>
+                <p>تكامل تام مع يوتيوب، تليجرام، وواتساب لنشر المحتوى في كل مكان.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-brain"></i>
+                <h3>ذكاء اصطناعي</h3>
+                <p>رؤية مستقبلية لدمج أدوات الذكاء الاصطناعي لتحسين التصفح والبحث داخل المنصة.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الاستماع والتشغيل (Media Player) -->
+    <section class="main-content" id="recitations">
+        <h2 class="section-title">المصحف المرتل المترجم</h2>
+        <div class="video-box">
             <div class="video-wrapper">
-                <!-- تم تضمين الـ Playlist الخاصة بك هنا مباشرة لتحميل الفيديوهات بداخل الموقع -->
                 <iframe src="https://www.youtube.com/embed/videoseries?list=PLNGi9Z7RkAp0sYYCpnMjjc19Utn82z0oM" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
-            <div class="player-title">
-                المصحف المرتل كاملاً بصوت الشيخ محمد اللحيدان
-                <span>مترجم إلى اللغتين العربية والإنجليزية (قائمة تشغيل متجددة)</span>
-            </div>
         </div>
+    </section>
 
-        <!-- أزرار منصات التواصل الاجتماعي ومتابعة المشروع -->
-        <div class="links-section">
-            
-            <!-- اليوتيوب -->
-            <a href="https://youtube.com/@quran_kareem.sadaqa?si=yBHvt0JKpEq_xDDN" target="_blank" class="btn-link btn-youtube">
-                <div class="right-side">
-                    <i class="fa-brands fa-youtube brand-icon" style="color: #ff0000;"></i>
-                    <span>تابعنا على يوتيوب</span>
-                </div>
-                <i class="fa-solid fa-chevron-left arrow-icon"></i>
-            </a>
-
-            <!-- التليجرام -->
-            <a href="https://t.me/Quran_Kareem_Sadaqa" target="_blank" class="btn-link btn-telegram">
-                <div class="right-side">
-                    <i class="fa-brands fa-telegram brand-icon" style="color: #0088cc;"></i>
-                    <span>انضم لقناة التليجرام</span>
-                </div>
-                <i class="fa-solid fa-chevron-left arrow-icon"></i>
-            </a>
-
-            <!-- الواتساب (جاهز للربط مستقبلاً، حالياً يفتح دردشة عامة أو يمكنك تبديله برابط مجموعتك) -->
-            <a href="https://wa.me/?text=شاهد%20مشروع%20القرآن%20الكريم%20الخيري:%20https://moh007mmed.github.io/quran-kareem/" target="_blank" class="btn-link btn-whatsapp">
-                <div class="right-side">
-                    <i class="fa-brands fa-whatsapp brand-icon" style="color: #25d366;"></i>
-                    <span>شارك الموقع عبر واتساب</span>
-                </div>
-                <i class="fa-solid fa-chevron-left arrow-icon"></i>
-            </a>
-
-        </div>
-
-        <!-- تذييل الصفحة -->
-        <footer>
-            <p>إن أريد إلا الإصلاح ما استطعت وما توفيقي إلا بالله</p>
-            <p style="margin-top: 5px; font-size: 0.8rem;">هذا المشروع صدقة جارية ® 2026</p>
-        </footer>
-
-    </div>
+    <!-- الفوتر -->
+    <footer id="connect">
+        <p>إن أريد إلا الإصلاح ما استطعت وما توفيقي إلا بالله</p>
+        <p style="margin-top: 10px; font-size: 0.8rem; color: var(--accent);">جميع الحقوق محفوظة للمشروع كـ صدقة جارية © 2026</p>
+    </footer>
 
 </body>
 </html>
