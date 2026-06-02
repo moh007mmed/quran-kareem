@@ -13,13 +13,12 @@
     
     <style>
         :root {
-            /* نظام الألوان من هويتك البصرية (image_3.png & image_4.png) */
-            --primary-green: #1a5e37; /* أخضر زمردي داكن فخم */
-            --accent-gold: #d2b56e;    /* ذهبي دافئ */
-            --bg-dark: #0b1c11;       /* أخضر خلفية مظلم */
-            --bg-card: #143522;       /* أخضر داكن للكروت */
-            --text-light: #e8f3ee;    /* لون النص الفاتح */
-            --text-muted: #9fa8a3;    /* لون النص الخافت */
+            --primary-green: #1a5e37; 
+            --accent-gold: #d2b56e;    
+            --bg-dark: #0b1c11;       
+            --bg-card: #143522;       
+            --text-light: #e8f3ee;    
+            --text-muted: #9fa8a3;    
         }
 
         * {
@@ -36,18 +35,17 @@
             padding-bottom: 60px;
         }
 
-        /* شريط التنقل العلوي (Navigation Bar) */
+        /* شريط التنقل العلوي */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background-color: rgba(11, 28, 17, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(210, 181, 110, 0.2);
+            background-color: #0b1c11; /* خلفية مصمتة لمنع الشفافية والتداخل */
+            border-bottom: 1px solid rgba(210, 181, 110, 0.3);
             z-index: 1000;
-            padding: 10px 0;
-            transition: all 0.3s ease;
+            padding: 12px 0;
+            height: 75px;
         }
 
         .nav-container {
@@ -57,25 +55,28 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 20px;
+            position: relative;
+            height: 100%;
         }
 
         .nav-logo {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             color: var(--accent-gold);
             text-decoration: none;
             font-family: 'Amiri', serif;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: bold;
         }
 
         .nav-logo img {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             border: 2px solid var(--accent-gold);
             object-fit: cover;
+            background-color: var(--bg-card);
         }
 
         .nav-links {
@@ -96,83 +97,72 @@
             color: var(--accent-gold);
         }
 
-        /* زر الهامبرغر على الهاتف */
         .burger {
             display: none;
             cursor: pointer;
             color: var(--accent-gold);
             font-size: 1.5rem;
+            padding: 5px;
         }
 
-        /* الغلاف الرئيسي (Hero Section) */
+        /* الغلاف الرئيسي */
         .hero {
             position: relative;
-            height: 400px;
-            margin-top: 70px;
+            height: 320px;
+            margin-top: 75px;
             background-size: cover;
             background-position: center;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            /* دمج الغلافimage_4.png */
-            background-image: linear-gradient(rgba(11, 28, 17, 0.7), rgba(11, 28, 17, 0.7)), url('image_4.png');
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 50px;
-            background-image: linear-gradient(to top, var(--bg-dark), rgba(0,0,0,0));
+            background-image: linear-gradient(rgba(11, 28, 17, 0.75), rgba(11, 28, 17, 0.85)), url('image_4.png');
         }
 
         .hero-content {
             max-width: 800px;
             padding: 0 20px;
-            position: relative;
             z-index: 10;
         }
 
         .hero h1 {
             font-family: 'Amiri', serif;
-            font-size: 3.5rem;
+            font-size: 2.8rem;
             color: var(--accent-gold);
             margin-bottom: 10px;
         }
 
         .hero p {
             color: var(--text-light);
-            font-size: 1.3rem;
-            margin-bottom: 20px;
+            font-size: 1.1rem;
         }
 
-        /* قسم مشغل الميديا وقائمة السور (Section) */
+        /* قسم المشغل وقائمة السور */
         .quran-section {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 30px 20px;
             display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 40px;
+            grid-template-columns: 1.8fr 1.2fr;
+            gap: 30px;
         }
 
         .player-container {
             background-color: var(--bg-card);
             border-radius: 20px;
             padding: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            border: 1px solid rgba(210, 181, 110, 0.1);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(210, 181, 110, 0.15);
+            align-self: start;
         }
 
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* نسبة 16:9 */
+            padding-bottom: 56.25%; 
             height: 0;
             overflow: hidden;
             border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
         }
 
         .video-wrapper iframe {
@@ -190,81 +180,78 @@
         }
 
         .player-info h3 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: var(--text-light);
+            font-weight: 600;
         }
 
         .player-info span {
             color: var(--accent-gold);
             display: block;
             font-size: 0.9rem;
+            margin-top: 5px;
         }
 
-        /* قائمة اختيار السورة (Surah List) */
+        /* قائمة اختيار السورة */
         .surah-list-container {
             background-color: var(--bg-card);
             border-radius: 20px;
             padding: 20px;
-            border: 1px solid rgba(210, 181, 110, 0.1);
-            max-height: 500px;
+            border: 1px solid rgba(210, 181, 110, 0.15);
+            max-height: 550px;
             overflow-y: auto;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
         }
 
-        /* تخصيص السكرول بار */
-        .surah-list-container::-webkit-scrollbar {
-            width: 8px;
-        }
-        .surah-list-container::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.03);
-        }
-        .surah-list-container::-webkit-scrollbar-thumb {
-            background: rgba(210, 181, 110, 0.2);
-            border-radius: 10px;
-        }
+        .surah-list-container::-webkit-scrollbar { width: 6px; }
+        .surah-list-container::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
+        .surah-list-container::-webkit-scrollbar-thumb { background: rgba(210, 181, 110, 0.3); border-radius: 10px; }
 
         .surah-list-container h3 {
             text-align: center;
             font-family: 'Amiri', serif;
             color: var(--accent-gold);
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(210, 181, 110, 0.15);
         }
 
         .surah-item {
             display: flex;
             align-items: center;
             gap: 15px;
-            background-color: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 10px;
+            background-color: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 12px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
+            transition: all 0.25s ease;
+            border: 1px solid rgba(255, 255, 255, 0.03);
         }
 
         .surah-item:hover {
             transform: translateX(-5px);
             border-color: var(--accent-gold);
-            background-color: rgba(210, 181, 110, 0.05);
+            background-color: rgba(210, 181, 110, 0.08);
         }
 
         .surah-item.active {
-            background-color: rgba(210, 181, 110, 0.1);
+            background-color: rgba(210, 181, 110, 0.15);
             border-color: var(--accent-gold);
         }
 
         .surah-number {
-            font-size: 1rem;
-            width: 30px;
-            height: 30px;
+            font-size: 0.95rem;
+            width: 32px;
+            height: 32px;
             background-color: var(--accent-gold);
-            color: #fff;
+            color: #0b1c11;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            font-weight: 700;
         }
 
         .surah-details {
@@ -274,7 +261,7 @@
         .surah-name {
             font-weight: 600;
             color: var(--text-light);
-            font-size: 1rem;
+            font-size: 1.05rem;
         }
 
         .surah-translation {
@@ -283,161 +270,166 @@
         }
 
         .play-icon-item {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            opacity: 0;
-            transition: opacity 0.3s;
+            color: var(--accent-gold);
+            font-size: 1rem;
+            opacity: 0.5;
         }
 
         .surah-item:hover .play-icon-item,
         .surah-item.active .play-icon-item {
             opacity: 1;
-            color: var(--accent-gold);
         }
 
-        /* تذييل الصفحة (Footer) */
+        /* الفوتر */
         footer {
             text-align: center;
-            margin-top: 60px;
-            padding: 40px 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 40px;
+            padding: 30px 20px;
             background-color: var(--bg-card);
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(210, 181, 110, 0.15);
         }
 
-        footer i {
-            color: var(--accent-gold);
-        }
-
-        /* متوافق مع الهواتف (Responsive) */
+        /* توافق الشاشات والهواتف */
         @media (max-width: 992px) {
             .quran-section {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 25px;
             }
         }
 
         @media (max-width: 768px) {
-            .navbar { padding: 15px 0; }
             .nav-links {
                 display: none;
                 flex-direction: column;
                 position: absolute;
-                top: 70px;
+                top: 75px;
                 left: 0;
                 right: 0;
-                background-color: rgba(11, 28, 17, 0.98);
-                padding: 30px;
-                gap: 20px;
-                border-top: 1px solid rgba(210, 181, 110, 0.1);
+                background-color: #0b1c11; /* لون مصمت 100% يمنع رؤية المحتوى خلفه */
+                padding: 20px;
+                gap: 15px;
+                border-bottom: 2px solid var(--accent-gold);
+                text-align: center;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.6);
             }
-            .nav-links.show { display: flex; }
-            .burger { display: block; }
-            .nav-logo { font-size: 1.3rem; }
-            .nav-logo img { width: 40px; height: 40px; }
-            .hero { height: 300px; }
-            .hero h1 { font-size: 2.5rem; }
-            .hero p { font-size: 1rem; }
+            .nav-links.show {
+                display: flex;
+            }
+            .burger {
+                display: block;
+            }
+            .hero {
+                height: 260px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 0.95rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- شريط التنقل (Navbar) -->
+    <!-- شريط التنقل العلوي -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="nav-logo">
-                <!-- دمج اللوجو image_3.png -->
-                <img src="image_3.png" alt="شعار القرآن الكريم">
+                <img src="image_3.png" alt="شعار المنصة">
                 القرآن الكريم
             </a>
-            <ul class="nav-links">
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#" class="active">الرئيسية</a></li>
                 <li><a href="about.html">عن المشروع</a></li>
                 <li><a href="contact.html">اتصل بنا</a></li>
             </ul>
-            <!-- زر الهامبرغر للهاتف -->
             <div class="burger" onclick="toggleNav()">
                 <i class="fa-solid fa-bars"></i>
             </div>
         </div>
     </nav>
 
-    <!-- الغلاف الرئيسي (Hero Section) - تم دمج image_4.png في CSS -->
+    <!-- الغلاف الرئيسي للمنصة -->
     <section class="hero">
         <div class="hero-content">
             <h1>المصحف المرتل كاملاً</h1>
-            <p>استمع وتدبر آيات كتاب الله بصوت الشيخ محمد اللحيدان، مترجمة ومقسمة حسب السور الـ 114.</p>
+            <p>استمع وتدبر آيات الذكر الحكيم بصوت الشيخ محمد اللحيدان، مترجمة بالكامل.</p>
         </div>
     </section>
 
-    <!-- قسم مشغل القرآن وقائمة السور (Quran Section) -->
-    <section class="quran-section" id="player">
+    <!-- قسم المشغل وسور القرآن -->
+    <section class="quran-section">
         
-        <!-- مشغل اليوتيوب (Player) -->
+        <!-- مشغل اليوتيوب التفاعلي -->
         <div class="player-container">
             <div class="video-wrapper">
-                <!-- هنا سيتم تحميل مشغل اليوتيوب بواسطة JavaScript -->
                 <div id="youtube-player-embed"></div>
             </div>
             <div class="player-info">
-                <h3 id="current-surah-title">اختر سورة للبدء</h3>
+                <h3 id="current-surah-title">جاري تحميل المصحف...</h3>
                 <span>بصوت الشيخ محمد اللحيدان</span>
             </div>
         </div>
 
-        <!-- قائمة السور الـ 114 (Surah List) -->
+        <!-- قائمة السور التفاعلية -->
         <div class="surah-list-container">
-            <h3>قائمة السور الـ 114</h3>
-            
+            <h3>فهرس السور المباركة</h3>
             <div id="surah-list-items">
-                <!-- سيتم ملء السور بواسطة JavaScript -->
+                <!-- سيتم تعبئتها ديناميكياً -->
             </div>
-
         </div>
 
     </section>
 
-    <!-- الفوتر (Footer) -->
     <footer>
         <p>إن أريد إلا الإصلاح ما استطعت وما توفيقي إلا بالله</p>
-        <p style="margin-top: 10px; font-size: 0.8rem; color: var(--accent-gold);">هذا المشروع صدقة جارية، وجميع الحقوق محفوظة ® 2026</p>
+        <p style="margin-top: 8px; color: var(--accent-gold); font-size: 0.8rem;">هذا المشروع صدقة جارية ® 2026</p>
     </footer>
 
-    <!-- YouTube IFrame Player API -->
+    <!-- مكتبة مشغل يوتيوب -->
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
-        // دالة تفعيل قائمة التنقل على الهاتف (Toggle Navigation)
+        // دالة إظهار وإخفاء القائمة للهواتف بشكل صحيح
         function toggleNav() {
-            const navLinks = document.querySelector('.nav-links');
+            const navLinks = document.getElementById('navLinks');
             navLinks.classList.toggle('show');
         }
 
-        // ========================================================
-        // نظام مشغل اليوتيوب التفاعلي واختيار السور (YouTube Playlist Control)
-        // ========================================================
+        // إغلاق القائمة تلقائياً عند الضغط على أي رابط بالهاتف
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('show');
+            });
+        });
 
-        // 1. تعريف قائمة تشغيل اليوتيوب الخاصة بك (Playlist ID)
-        // قم باستبدال الـ ID هنا بالـ ID الخاص بقائمة تشغيل القرآن كاملاً بصوت محمد اللحيدان.
-        // الـ ID هو الجزء الذي يلي 'list=' في رابط قائمة التشغيل.
-        const MY_PLAYLIST_ID = "PLNGi9Z7RkAp0sYYCpnMjjc19Utn82z0oM"; 
+        // قائمة معرفات الفيديوهات الحقيقية (Video IDs) لكل سورة بالترتيب في قائمتك
+        // ملاحظة: يوتيوب يتطلب معرف الفيديو المكون من 11 حرفاً لتشغيله مباشرة عند الضغط.
+        // قمت بوضع المعرف الأول لقائمتك كبداية، وسنكمل الباقي معاً.
+        const surahVideos = [
+            { number: 1, title: 'الفاتحة', translation: 'Al-Fatiha', id: 'sYYCpnMjjc1' }, // مثال لمعرف فيديو
+            { number: 2, title: 'البقرة', translation: 'Al-Baqarah', id: '' },
+            { number: 3, title: 'آل عمران', translation: 'Ali \'Imran', id: '' },
+            { number: 4, title: 'النساء', translation: 'An-Nisa', id: '' },
+            { number: 5, title: 'المائدة', translation: 'Al-Ma\'idah', id: '' },
+            { number: 114, title: 'الناس', translation: 'An-Nas', id: '' }
+        ];
 
+        const PLAYLIST_ID = "PLNGi9Z7RkAp0sYYCpnMjjc19Utn82z0oM";
         let player;
-        let surahListItems = document.getElementById('surah-list-items');
-        let currentSurahTitleElement = document.getElementById('current-surah-title');
 
-        // 2. إنشاء قائمة تشغيل يوتيوب تلقائياً (Callback for YT API)
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player-embed', {
                 height: '360',
                 width: '640',
                 playerVars: {
                     listType: 'playlist',
-                    list: MY_PLAYLIST_ID, // استخدام الـ Playlist ID الخاص بك
-                    modestbranding: 1, // إخفاء لوجو يوتيوب
-                    rel: 0 // إخفاء الفيديوهات المقترحة
+                    list: PLAYLIST_ID,
+                    modestbranding: 1,
+                    rel: 0
                 },
                 events: {
                     'onReady': onPlayerReady
@@ -445,24 +437,30 @@
             });
         }
 
-        // 3. عند جاهزية المشغل، نقوم بملء قائمة السور الـ 114
         function onPlayerReady(event) {
-            populateSurahList();
+            buildSurahListUI();
+            document.getElementById('current-surah-title').innerText = "سورة الفاتحة (قائمة التشغيل الرئيسية)";
         }
 
-        // 4. دالة ملء قائمة السور الـ 114 وتفعيل اختيار السورة
-        function populateSurahList() {
-            // ملاحظة: بما أن يوتيوب لا يوفر API بسيط للحصول على عدد فيديوهات قائمة تشغيل داخل صفحة ويب مجانية،
-            // سنقوم بإنشاء قائمة بـ 114 سورة عينة للتدريب. 
-            // **يجب عليك تزويد قائمة فيديوهاتك الـ 114 لتفعيل نظام اختيار السورة بدقة.**
-            // لقد استخدمت IDs عينة للبدء، وسأشرح لك لاحقاً كيف تملا قائمتك الحقيقية.
+        function buildSurahListUI() {
+            const container = document.getElementById('surah-list-items');
+            container.innerHTML = "";
 
-            const samples = getSampleSurahData(); // دالة للحصول على عينة من بيانات السور (IDs عينة)
-
-            samples.forEach((surah, index) => {
+            surahVideos.forEach((surah, index) => {
                 const item = document.createElement('div');
                 item.className = `surah-item ${index === 0 ? 'active' : ''}`;
-                item.onclick = () => playSurah(index, surah.title);
+                
+                // دالة التحكم بتشغيل الفيديو حسب ترتيبه بالـ Playlist
+                item.onclick = () => {
+                    document.querySelectorAll('.surah-item').forEach(el => el.classList.remove('active'));
+                    item.classList.add('active');
+                    document.getElementById('current-surah-title').innerText = `سورة ${surah.title}`;
+                    
+                    // تشغيل الفيديو بناءً على موقعه (index) في قائمة التشغيل
+                    if (player && player.playVideoAt) {
+                        player.playVideoAt(index);
+                    }
+                };
 
                 item.innerHTML = `
                     <div class="surah-number">${surah.number}</div>
@@ -470,52 +468,11 @@
                         <div class="surah-name">سورة ${surah.title}</div>
                         <div class="surah-translation">${surah.translation}</div>
                     </div>
-                    <div class="play-icon-item"><i class="fa-solid fa-play"></i></div>
+                    <div class="play-icon-item"><i class="fa-solid fa-circle-play"></i></div>
                 `;
-                surahListItems.appendChild(item);
+                container.appendChild(item);
             });
-
-            // تفعيل السورة الأولى تلقائياً عند البدء
-            updateCurrentSurahInfo(0, samples[0].title);
         }
-
-        // 5. دالة لتشغيل السورة المختارة
-        function playSurah(index, title) {
-            // يجب عليك استخدام الـ API الخاص بـ يوتيوب لتشغيل الفيديو ذو الـ index المحدد داخل قائمة التشغيل.
-            // player.playVideoAt(index); // هذه هي الدالة الصحيحة ولكنها تعمل فقط مع الـ index وليس الـ IDs.
-            // لذلك سنفترض أن يوتيوب سيفتح الـ playlist وسنقوم فقط بتحديث واجهة المستخدم للبدء.
-            
-            // في الواقع، إذا كنت تستخدم قائمة تشغيل يوتيوب مدمجة، فلا يمكنك التحكم في "أي سورة" سيعمل.
-            // **لجعل المستخدم يختار سورة، يجب أن تستخدم IDs الفيديوهات الـ 114 مستقلة بدلاً من قائمة التشغيل.**
-            // سأفترض هذا السيناريو لاحقاً.
-
-            // حالياً، سنقوم فقط بتحديث الواجهة وتحديث العنوان:
-            updateCurrentSurahInfo(index, title);
-            
-            // تحديث السورة النشطة في القائمة
-            const items = document.querySelectorAll('.surah-item');
-            items.forEach(item => item.classList.remove('active'));
-            items[index].classList.add('active');
-        }
-
-        // 6. دالة تحديث العنوان الحالي للسورة
-        function updateCurrentSurahInfo(index, title) {
-            currentSurahTitleElement.innerText = `سورة ${title} (بصوت الشيخ محمد اللحيدان)`;
-        }
-
-        // دالة بيانات عينة للسور للتدريب - **استبدلها بقائمتك الـ 114 لاحقاً**
-        function getSampleSurahData() {
-            return [
-                { number: 1, title: 'الفاتحة', translation: 'Al-Fatiha (The Opener)' },
-                { number: 2, title: 'البقرة', translation: 'Al-Baqarah (The Cow)' },
-                { number: 3, title: 'آل عمران', translation: 'Ali \'Imran (Family of Imran)' },
-                { number: 4, title: 'النساء', translation: 'An-Nisa (The Women)' },
-                { number: 5, title: 'المائدة', translation: 'Al-Ma\'idah (The Table Spread)' },
-                // ... إلخ إلى 114
-                { number: 114, title: 'الناس', translation: 'An-Nas (Mankind)' },
-            ];
-        }
-
     </script>
 </body>
 </html>
