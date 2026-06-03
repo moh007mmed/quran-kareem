@@ -29,7 +29,7 @@
             padding-top: 75px;
         }
 
-        /* شريط التنقل العلوي مع القائمة المنسدلة */
+        /* شريط التنقل العلوي */
         .navbar {
             position: fixed;
             top: 0; left: 0; right: 0;
@@ -40,24 +40,15 @@
         }
 
         .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            height: 100%;
+            max-width: 1200px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 20px; height: 100%;
         }
 
         .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--accent-gold);
-            text-decoration: none;
-            font-family: 'Amiri', serif;
-            font-size: 1.5rem;
-            font-weight: bold;
+            display: flex; align-items: center; gap: 12px;
+            color: var(--accent-gold); text-decoration: none;
+            font-family: 'Amiri', serif; font-size: 1.5rem; font-weight: bold;
         }
 
         .nav-logo-icon {
@@ -117,10 +108,8 @@
         .player-meta h3 { font-size: 1.5rem; color: var(--text-light); font-weight: 600; font-family: 'Amiri', serif;}
         .player-meta span { color: var(--accent-gold); display: block; font-size: 0.95rem; margin-bottom: 25px; }
 
-        /* ستايل مشغل الصوت الأساسي للمتصفح */
         audio { width: 100%; margin-bottom: 20px; accent-color: var(--accent-gold); }
 
-        /* زر التحميل الفخم */
         .download-btn {
             display: inline-flex; align-items: center; gap: 10px;
             background-color: transparent; color: var(--accent-gold);
@@ -166,7 +155,6 @@
             color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(210, 181, 110, 0.15); margin-top: 40px;
         }
 
-        /* التوافق التام مع الشاشات المتنوعة والهواتف */
         @media (max-width: 992px) {
             .quran-layout { grid-template-columns: 1fr; }
             .player-box { position: relative; top: 0; }
@@ -215,7 +203,7 @@
 
     <header class="page-header">
         <h1>المصحف الإلكتروني الصوتي</h1>
-        <p>استماع مريح في الخلفية، استهلاك باقة منخفض جداً، وإمكانية التحميل المباشر</p>
+        <p>استماع مريح في الخلفية، استهلاك باقة منخفض جداً، وإمكانية التحميل المباشر بالتسمية الصحيحة</p>
     </header>
 
     <section class="quran-layout">
@@ -225,7 +213,7 @@
             </div>
             <div class="player-meta">
                 <h3 id="current-title">سورة الفاتحة</h3>
-                <span>برواية حفص عن عاصم - الشيخ محمد اللحيدان</span>
+                <span>الشيخ محمد اللحيدان</span>
             </div>
             
             <audio id="audio-element" controls></audio>
@@ -256,8 +244,8 @@
             }
         }
 
-        // الأسماء الكاملة لجميع السور المباركة بالترتيب الصحيح 114 سورة
-        const surahNames = [
+        // 1. أسماء السور بالعربي
+        const surahNamesAr = [
             "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس",
             "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه",
             "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم",
@@ -272,25 +260,42 @@
             "المسد", "الإخلاص", "الفلق", "الناس"
         ];
 
-        // سيرفر بث الصوت المباشر المستقر والقوي جداً للشيخ محمد اللحيدان
+        // 2. أسماء السور بالإنجليزي بدقة للتسمية عند التحميل
+        const surahNamesEn = [
+            "Al-Fatihah", "Al-Baqarah", "Ali 'Imran", "An-Nisa'", "Al-Ma'idah", "Al-An'am", "Al-A'raf", "Al-Anfal", "At-Tawbah", "Yunus",
+            "Hud", "Yusuf", "Ar-Ra'd", "Ibrahim", "Al-Hijr", "An-Nahl", "Al-Isra", "Al-Kahf", "Maryam", "Taha",
+            "Al-Anbiya", "Al-Hajj", "Al-Mu'minun", "An-Nut", "Al-Furqan", "Ash-Shu'ara", "An-Naml", "Al-Qasas", "Al-Ankabut", "Ar-Rum",
+            "Luqman", "As-Sajdah", "Al-Ahzab", "Saba", "Fatir", "Ya-Sin", "As-Saffat", "Sad", "Az-Zumar", "Ghafir",
+            "Fussilat", "Ash-Shura", "Az-Zukhruf", "Ad-Dukhan", "Al-Jathiyah", "Al-Ahqaf", "Muhammad", "Al-Fath", "Al-Hujurat", "Qaf",
+            "Adh-Dhariyat", "At-Tur", "An-Najm", "Al-Qamar", "Ar-Rahman", "Al-Waqi'ah", "Al-Hadid", "Al-Mujadilah", "Al-Hashr", "Al-Mumtahanah",
+            "As-Saff", "Al-Jumu'ah", "Al-Munafiqun", "At-Taghabun", "At-Talaq", "At-Tahrim", "Al-Mulk", "Al-Qalam", "Al-Haqqah", "Al-Ma'arij",
+            "Nuh", "Al-Jinn", "Al-Muzzammil", "Al-Muddaththir", "Al-Qiyamah", "Al-Insan", "Al-Mursalat", "An-Naba", "An-Nazi'at", "'Abasa",
+            "At-Takwir", "Al-Infitar", "Al-Mutaffifin", "Al-Inshiqaq", "Al-Buruj", "At-Tariq", "Al-A'la", "Al-Ghashiyah", "Al-Fajr", "Al-Balad",
+            "Ash-Shams", "Al-Layl", "Ad-Duha", "Ash-Sharh", "At-Tin", "Al-'Alaq", "Al-Qadr", "Al-Bayyinah", "Az-Zalzalah", "Al-'Adiyat",
+            "Al-Qari'ah", "At-Takathur", "Al-'Asr", "Al-Humazah", "Al-Fil", "Quraysh", "Al-Ma'un", "Al-Kawthar", "Al-Kafirun", "An-Nasr",
+            "Al-Masad", "Al-Ikhlas", "Al-Falaq", "An-Nas"
+        ];
+
+        /* 💡 فكرة تعديل الرابط للمصحف الخاشع:
+           هذا الرابط الحالي هو المصحف المرتل الكامل. إذا وجدت رابط تلاوة التراويح أو التلاوات الخاشعة 
+           التي تعجبك من موقع MP3Quran، خذ الرابط قبل رقم السورة واستبدل هذا المتغير به فقط!
+        */
         const AUDIO_SERVER = "https://server8.mp3quran.net/lhdan/";
 
         const audioElement = document.getElementById('audio-element');
         const currentTitle = document.getElementById('current-title');
         const downloadAnchor = document.getElementById('download-anchor');
 
-        // بناء الفهرس أوتوماتيكياً عند فتح الصفحة
         window.onload = function() {
             generateSurahList();
-            // تشغيل سورة الفاتحة افتراضياً كبداية بدون عمل Auto-play إجباري احتراماً للزائر
-            setAudioSource(0);
+            setAudioSource(0); // الفاتحة كبداية
         };
 
         function generateSurahList() {
             const container = document.getElementById('surah-container');
             container.innerHTML = "";
 
-            surahNames.forEach((name, index) => {
+            surahNamesAr.forEach((name, index) => {
                 const card = document.createElement('div');
                 card.className = `surah-card ${index === 0 ? 'active' : ''}`;
                 card.id = `surah-card-${index}`;
@@ -299,11 +304,9 @@
                     document.querySelectorAll('.surah-card').forEach(c => c.classList.remove('active'));
                     card.classList.add('active');
                     
-                    // تغيير السورة وتشغيلها فوراً
                     setAudioSource(index);
                     audioElement.play();
 
-                    // التعديل السحري للهواتف: الصعود التلقائي الذكي للأعلى لرؤية المشغل والتحميل
                     if (window.innerWidth <= 992) {
                         document.getElementById('main-player').scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
@@ -318,24 +321,25 @@
             });
         }
 
-        // دالة إنشاء روابط البث والتحميل ديناميكياً بناءً على رقم السورة المكون من 3 خانات
         function setAudioSource(index) {
-            const surahNumber = String(index + 1).padStart(3, '0'); // يحول الرقم من 1 إلى 001 ومن 14 إلى 014 تلقائياً
+            const surahNumber = String(index + 1).padStart(3, '0'); 
             const fileUrl = `${AUDIO_SERVER}${surahNumber}.mp3`;
             
             audioElement.src = fileUrl;
-            currentTitle.innerText = `سورة ${surahNames[index]}`;
+            currentTitle.innerText = `سورة ${surahNamesAr[index]}`;
             
-            // تحديث رابط زر التحميل
+            // تحديث رابط التحميل وصيغة الاسم المطلوبة بدقة (الترتيب - عربي - انجليزي)
             downloadAnchor.href = fileUrl;
-            downloadAnchor.setAttribute('download', `سورة_${surahNames[index]}_اللحيدان.mp3`);
+            
+            const customFileName = `${surahNumber} - سورة ${surahNamesAr[index]} - ${surahNamesEn[index]}.mp3`;
+            downloadAnchor.setAttribute('download', customFileName);
         }
 
-        // الانتقال التلقائي للسورة التالية عند انتهاء السورة الحالية لمستمعي قفل الشاشة
+        // التشغيل التلقائي المتتابع للسور
         audioElement.onended = function() {
-            let currentIndex = surahNames.findIndex(name => currentTitle.innerText.includes(name));
+            let currentIndex = surahNamesAr.findIndex(name => currentTitle.innerText.includes(name));
             let nextIndex = currentIndex + 1;
-            if (nextIndex < surahNames.length) {
+            if (nextIndex < surahNamesAr.length) {
                 const nextCard = document.getElementById(`surah-card-${nextIndex}`);
                 if (nextCard) nextCard.click();
             }
