@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+    <!-- Google tag (gtag.js) - تم إدراج كود التتبع لتوحيد الإحصائيات وضمان دقة التقارير -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TY6ZGKB8WK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-TY6ZGKB8WK');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>المصحف الإلكتروني التفاعلي | استمع وحمّل</title>
@@ -191,7 +201,7 @@
                         <li><a href="quran.html" class="active">استماع للمصحف</a></li>
                         <li><a href="#" onclick="alert('قريباً إن شاء الله: قسم مخصص لقراءة المصحف الشريف كاملاً ورقياً')">قراءة المصحف</a></li>
                     </ul>
-                </li>
+                </td>
                 <li><a href="about.html">عن المشروع</a></li>
                 <li><a href="contact.html">اتصل بنا</a></li>
             </ul>
@@ -264,7 +274,7 @@
         const surahNamesEn = [
             "Al-Fatihah", "Al-Baqarah", "Ali 'Imran", "An-Nisa'", "Al-Ma'idah", "Al-An'am", "Al-A'raf", "Al-Anfal", "At-Tawbah", "Yunus",
             "Hud", "Yusuf", "Ar-Ra'd", "Ibrahim", "Al-Hijr", "An-Nahl", "Al-Isra", "Al-Kahf", "Maryam", "Taha",
-            "Al-Anbiya", "Al-Hajj", "Al-Mu'minun", "An-Nut", "Al-Furqan", "Ash-Shu'ara", "An-Naml", "Al-Qasas", "Al-Ankabut", "Ar-Rum",
+            "Al-Anbiya", "Al-Hajj", "Al-Mu'minun", "An-Nur", "Al-Furqan", "Ash-Shu'ara", "An-Naml", "Al-Qasas", "Al-Ankabut", "Ar-Rum",
             "Luqman", "As-Sajdah", "Al-Ahzab", "Saba", "Fatir", "Ya-Sin", "As-Saffat", "Sad", "Az-Zumar", "Ghafir",
             "Fussilat", "Ash-Shura", "Az-Zukhruf", "Ad-Dukhan", "Al-Jathiyah", "Al-Ahqaf", "Muhammad", "Al-Fath", "Al-Hujurat", "Qaf",
             "Adh-Dhariyat", "At-Tur", "An-Najm", "Al-Qamar", "Ar-Rahman", "Al-Waqi'ah", "Al-Hadid", "Al-Mujadilah", "Al-Hashr", "Al-Mumtahanah",
@@ -276,10 +286,6 @@
             "Al-Masad", "Al-Ikhlas", "Al-Falaq", "An-Nas"
         ];
 
-        /* 💡 فكرة تعديل الرابط للمصحف الخاشع:
-           هذا الرابط الحالي هو المصحف المرتل الكامل. إذا وجدت رابط تلاوة التراويح أو التلاوات الخاشعة 
-           التي تعجبك من موقع MP3Quran، خذ الرابط قبل رقم السورة واستبدل هذا المتغير به فقط!
-        */
         const AUDIO_SERVER = "https://server8.mp3quran.net/lhdan/";
 
         const audioElement = document.getElementById('audio-element');
@@ -328,7 +334,6 @@
             audioElement.src = fileUrl;
             currentTitle.innerText = `سورة ${surahNamesAr[index]}`;
             
-            // تحديث رابط التحميل وصيغة الاسم المطلوبة بدقة (الترتيب - عربي - انجليزي)
             downloadAnchor.href = fileUrl;
             
             const customFileName = `${surahNumber} - سورة ${surahNamesAr[index]} - ${surahNamesEn[index]}.mp3`;
