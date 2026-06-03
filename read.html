@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TY6ZGKB8WK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-TY6ZGKB8WK');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>قراءة المصحف الشريف | المصحف الإلكتروني التفاعلي</title>
@@ -61,7 +70,7 @@
         .dropdown-menu li a { display: block; padding: 10px 20px; color: var(--text-light); font-size: 0.9rem; }
         .dropdown-menu li a:hover { background-color: var(--bg-card); color: var(--accent-gold); }
         .dropdown:hover .dropdown-menu { display: block; }
-        .burger { display: pointer; cursor: pointer; color: var(--accent-gold); font-size: 1.5rem; display: none; }
+        .burger { cursor: pointer; color: var(--accent-gold); font-size: 1.5rem; display: none; }
 
         /* حاوية القراءة وعناصر التحكم */
         .reader-container { max-width: 900px; margin: 40px auto; padding: 20px; }
@@ -147,7 +156,7 @@
             </a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">الرئيسية</a></li>
-                <li class="dropdown id="quranDropdown"">
+                <li class="dropdown" id="quranDropdown">
                     <a href="#" class="active" onclick="toggleDropdown(event)">القرآن الكريم <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; margin-right: 3px;"></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="quran.html">استماع للمصحف</a></li>
@@ -168,7 +177,7 @@
             <div>
                 <label for="surahSelect" style="font-size: 0.9rem; color: var(--text-muted); display: block; margin-bottom: 5px;"> اختر السورة الكريمة:</label>
                 <select id="surahSelect" class="select-box" onchange="loadSurah(this.value)">
-                    </select>
+                </select>
             </div>
             
             <div class="font-controls">
@@ -181,9 +190,9 @@
         <div class="quran-text-card">
             <div id="loadingText" class="loading"><i class="fa-solid fa-spinner fa-spin"></i> جاري تحميل السورة المباركة...</div>
             <div id="surahTitle" class="surah-title">سُورَةُ الفَاتِحَةِ</div>
-            <div id="basmala" class="basmala">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+            <div id="basmala" class="basmala">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
             <div id="quranContent" class="quran-content">
-                </div>
+            </div>
         </div>
     </div>
 
@@ -251,8 +260,8 @@
                 if (surahNumber != 1 && surahNumber != 9) {
                     basmala.style.display = 'block';
                     // إزالة البسملة من الآية الأولى إذا كانت مدمجة في الـ API
-                    if (surah.ayahs[0].text.includes("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ")) {
-                        let firstAyahText = surah.ayahs[0].text.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "").trim();
+                    if (surah.ayahs[0].text.includes("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ")) {
+                        let firstAyahText = surah.ayahs[0].text.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "").trim();
                         text += firstAyahText + ` <span class="verse-number">١</span> `;
                         startingAyah = 1;
                     }
