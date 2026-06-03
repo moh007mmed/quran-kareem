@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المصحف المرتل | استمع واختار</title>
+    <title>المصحف الإلكتروني التفاعلي | استمع وحمّل</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2 family=Cairo:wght@300;400;600;700&family=Amiri:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Amiri:ital@0;1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -74,57 +74,63 @@
         }
         .nav-links a:hover, .nav-links a.active { color: var(--accent-gold); }
 
-        /* هندسة القائمة المنسدلة (Dropdown) للكمبيوتر */
+        /* القائمة المنسدلة */
         .dropdown { position: relative; }
         .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 100%; right: 0;
-            background-color: #0b1c11;
-            border: 1px solid rgba(210, 181, 110, 0.3);
-            border-radius: 8px;
-            list-style: none;
-            min-width: 180px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            display: none; position: absolute;
+            top: 100%; right: 0; background-color: #0b1c11;
+            border: 1px solid rgba(210, 181, 110, 0.3); border-radius: 8px;
+            list-style: none; min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.5);
             padding: 10px 0;
         }
-        .dropdown-menu li a {
-            display: block; padding: 10px 20px; color: var(--text-light); font-size: 0.9rem;
-        }
+        .dropdown-menu li a { display: block; padding: 10px 20px; color: var(--text-light); font-size: 0.9rem; }
         .dropdown-menu li a:hover { background-color: var(--bg-card); color: var(--accent-gold); }
-        .dropdown:hover .dropdown-menu { display: block; } /* تظهر عند حركية الماوس */
+        .dropdown:hover .dropdown-menu { display: block; }
 
         .burger { display: none; cursor: pointer; color: var(--accent-gold); font-size: 1.5rem; }
 
-        /* عنوان الصفحة الداخلي */
-        .page-header {
-            text-align: center; padding: 40px 20px 20px 20px;
-        }
+        /* عنوان الصفحة */
+        .page-header { text-align: center; padding: 40px 20px 20px 20px; }
         .page-header h1 { font-family: 'Amiri', serif; color: var(--accent-gold); font-size: 2.5rem; }
         .page-header p { color: var(--text-muted); font-size: 1.1rem; }
 
         /* حاوية المشغل والفهرس */
         .quran-layout {
             max-width: 1200px; margin: 0 auto; padding: 20px;
-            display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 30px;
+            display: grid; grid-template-columns: 1.6fr 1.4fr; gap: 30px;
         }
 
+        /* صندوق المشغل الصوتي المطور */
         .player-box {
-            background-color: var(--bg-card); border-radius: 20px; padding: 20px;
-            border: 1px solid rgba(210, 181, 110, 0.15); box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-            align-self: start; position: sticky; top: 100px;
+            background-color: var(--bg-card); border-radius: 20px; padding: 30px 20px;
+            border: 1px solid rgba(210, 181, 110, 0.2); box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            align-self: start; position: sticky; top: 100px; text-align: center;
         }
 
-        .video-holder {
-            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;
+        .audio-visualizer {
+            width: 100px; height: 100px; background-color: rgba(210, 181, 110, 0.1);
+            border-radius: 50%; margin: 0 auto 20px auto; display: flex;
+            align-items: center; justify-content: center; border: 2px dashed var(--accent-gold);
+            color: var(--accent-gold); font-size: 2.5rem;
         }
-        .video-holder iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        .player-meta { margin-top: 20px; text-align: center; }
-        .player-meta h3 { font-size: 1.3rem; color: var(--text-light); font-weight: 600; }
-        .player-meta span { color: var(--accent-gold); display: block; font-size: 0.95rem; margin-top: 5px; }
+        .player-meta h3 { font-size: 1.5rem; color: var(--text-light); font-weight: 600; font-family: 'Amiri', serif;}
+        .player-meta span { color: var(--accent-gold); display: block; font-size: 0.95rem; margin-bottom: 25px; }
 
-        /* فهرس السور المطور */
+        /* ستايل مشغل الصوت الأساسي للمتصفح */
+        audio { width: 100%; margin-bottom: 20px; accent-color: var(--accent-gold); }
+
+        /* زر التحميل الفخم */
+        .download-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            background-color: transparent; color: var(--accent-gold);
+            border: 2px solid var(--accent-gold); padding: 10px 25px;
+            font-size: 0.95rem; font-weight: 700; text-decoration: none;
+            border-radius: 30px; transition: all 0.3s ease; width: 100%; justify-content: center;
+        }
+        .download-btn:hover { background-color: var(--accent-gold); color: #0b1c11; }
+
+        /* فهرس السور المباركة */
         .index-box {
             background-color: var(--bg-card); border-radius: 20px; padding: 20px;
             border: 1px solid rgba(210, 181, 110, 0.15); max-height: 650px; overflow-y: auto;
@@ -160,7 +166,7 @@
             color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(210, 181, 110, 0.15); margin-top: 40px;
         }
 
-        /* التوافق مع الهواتف والقوائم المتداخلة */
+        /* التوافق التام مع الشاشات المتنوعة والهواتف */
         @media (max-width: 992px) {
             .quran-layout { grid-template-columns: 1fr; }
             .player-box { position: relative; top: 0; }
@@ -174,10 +180,7 @@
                 text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
             }
             .nav-links.show { display: flex; }
-            .dropdown-menu {
-                position: relative; top: 0; width: 100%; box-shadow: none;
-                border: none; background-color: rgba(255,255,255,0.02); display: none;
-            }
+            .dropdown-menu { position: relative; top: 0; width: 100%; box-shadow: none; border: none; display: none; }
             .dropdown.open .dropdown-menu { display: block; }
             .burger { display: block; }
             .page-header h1 { font-size: 2rem; }
@@ -211,19 +214,26 @@
     </nav>
 
     <header class="page-header">
-        <h1>المصحف الإلكتروني التفاعلي</h1>
-        <p>استمع مباشرة إلى السورة التي تختارها بضغطة زر واحدة</p>
+        <h1>المصحف الإلكتروني الصوتي</h1>
+        <p>استماع مريح في الخلفية، استهلاك باقة منخفض جداً، وإمكانية التحميل المباشر</p>
     </header>
 
     <section class="quran-layout">
-        <div class="player-box">
-            <div class="video-holder">
-                <div id="youtube-player-embed"></div>
+        <div class="player-box" id="main-player">
+            <div class="audio-visualizer">
+                <i class="fa-solid fa-radio"></i>
             </div>
             <div class="player-meta">
                 <h3 id="current-title">سورة الفاتحة</h3>
-                <span>بصوت الشيخ محمد اللحيدان</span>
+                <span>برواية حفص عن عاصم - الشيخ محمد اللحيدان</span>
             </div>
+            
+            <audio id="audio-element" controls></audio>
+            
+            <a href="#" id="download-anchor" download class="download-btn">
+                تحميل السورة الحالية (MP3)
+                <i class="fa-solid fa-cloud-arrow-down"></i>
+            </a>
         </div>
 
         <div class="index-box">
@@ -237,15 +247,8 @@
         <p style="margin-top: 8px; color: var(--accent-gold); font-size: 0.8rem;">هذا المشروع صدقة جارية ® 2026</p>
     </footer>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
-
     <script>
-        // دالة تفعيل منيو الهاتف
-        function toggleNav() {
-            document.getElementById('navLinks').classList.toggle('show');
-        }
-
-        // دالة التحكم بالقائمة المنسدلة على الهاتف
+        function toggleNav() { document.getElementById('navLinks').classList.toggle('show'); }
         function toggleDropdown(event) {
             if (window.innerWidth <= 768) {
                 event.preventDefault();
@@ -253,7 +256,7 @@
             }
         }
 
-        // مصفوفة جافا سكريبت الذكية بأسماء السور الـ 114 كاملة بالترتيب الحقيقي
+        // الأسماء الكاملة لجميع السور المباركة بالترتيب الصحيح 114 سورة
         const surahNames = [
             "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس",
             "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه",
@@ -269,23 +272,20 @@
             "المسد", "الإخلاص", "الفلق", "الناس"
         ];
 
-        // رقم الـ Playlist الخاصة بك من يوتيوب
-        const PLAYLIST_ID = "PLNGi9Z7RkAp0sYYCpnMjjc19Utn82z0oM";
-        let player;
+        // سيرفر بث الصوت المباشر المستقر والقوي جداً للشيخ محمد اللحيدان
+        const AUDIO_SERVER = "https://server8.mp3quran.net/lhdan/";
 
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-player-embed', {
-                height: '360', width: '640',
-                playerVars: { listType: 'playlist', list: PLAYLIST_ID, modestbranding: 1, rel: 0 },
-                events: { 'onReady': onPlayerReady }
-            });
-        }
+        const audioElement = document.getElementById('audio-element');
+        const currentTitle = document.getElementById('current-title');
+        const downloadAnchor = document.getElementById('download-anchor');
 
-        function onPlayerReady(event) {
+        // بناء الفهرس أوتوماتيكياً عند فتح الصفحة
+        window.onload = function() {
             generateSurahList();
-        }
+            // تشغيل سورة الفاتحة افتراضياً كبداية بدون عمل Auto-play إجباري احتراماً للزائر
+            setAudioSource(0);
+        };
 
-        // توليد الـ 114 سورة برمجياً فوراً وبدون تعب وتكرار الكود
         function generateSurahList() {
             const container = document.getElementById('surah-container');
             container.innerHTML = "";
@@ -293,15 +293,19 @@
             surahNames.forEach((name, index) => {
                 const card = document.createElement('div');
                 card.className = `surah-card ${index === 0 ? 'active' : ''}`;
+                card.id = `surah-card-${index}`;
                 
                 card.onclick = () => {
                     document.querySelectorAll('.surah-card').forEach(c => c.classList.remove('active'));
                     card.classList.add('active');
-                    document.getElementById('current-title').innerText = `سورة ${name}`;
                     
-                    // استدعاء يوتيوب لتشغيل الفيديو ذو الترتيب الصحيح داخل قائمة التشغيل
-                    if (player && player.playVideoAt) {
-                        player.playVideoAt(index);
+                    // تغيير السورة وتشغيلها فوراً
+                    setAudioSource(index);
+                    audioElement.play();
+
+                    // التعديل السحري للهواتف: الصعود التلقائي الذكي للأعلى لرؤية المشغل والتحميل
+                    if (window.innerWidth <= 992) {
+                        document.getElementById('main-player').scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
                 };
 
@@ -313,6 +317,29 @@
                 container.appendChild(card);
             });
         }
+
+        // دالة إنشاء روابط البث والتحميل ديناميكياً بناءً على رقم السورة المكون من 3 خانات
+        function setAudioSource(index) {
+            const surahNumber = String(index + 1).padStart(3, '0'); // يحول الرقم من 1 إلى 001 ومن 14 إلى 014 تلقائياً
+            const fileUrl = `${AUDIO_SERVER}${surahNumber}.mp3`;
+            
+            audioElement.src = fileUrl;
+            currentTitle.innerText = `سورة ${surahNames[index]}`;
+            
+            // تحديث رابط زر التحميل
+            downloadAnchor.href = fileUrl;
+            downloadAnchor.setAttribute('download', `سورة_${surahNames[index]}_اللحيدان.mp3`);
+        }
+
+        // الانتقال التلقائي للسورة التالية عند انتهاء السورة الحالية لمستمعي قفل الشاشة
+        audioElement.onended = function() {
+            let currentIndex = surahNames.findIndex(name => currentTitle.innerText.includes(name));
+            let nextIndex = currentIndex + 1;
+            if (nextIndex < surahNames.length) {
+                const nextCard = document.getElementById(`surah-card-${nextIndex}`);
+                if (nextCard) nextCard.click();
+            }
+        };
     </script>
 </body>
 </html>
