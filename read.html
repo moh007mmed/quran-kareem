@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قراءة المصحف الشريف | المصحف الإلكتروني التفاعلي</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Amiri:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-green: #1a5e37; 
+            --accent-gold: #d2b56e;    
+            --bg-dark: #0b1c11;       
+            --bg-card: #143522;       
+            --text-light: #e8f3ee;    
+            --text-muted: #9fa8a3;    
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.8;
+            padding-top: 75px;
+        }
+
+        /* شريط التنقل العلوي */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0;
+            background-color: #0b1c11; border-bottom: 1px solid rgba(210, 181, 110, 0.3);
+            z-index: 1000; height: 75px;
+        }
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; display: flex;
+            justify-content: space-between; align-items: center; padding: 0 20px; height: 100%;
+        }
+        .nav-logo {
+            display: flex; align-items: center; gap: 12px; color: var(--accent-gold);
+            text-decoration: none; font-family: 'Amiri', serif; font-size: 1.5rem; font-weight: bold;
+        }
+        .nav-logo-icon {
+            width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--accent-gold);
+            display: flex; align-items: center; justify-content: center; background-color: var(--bg-card);
+        }
+        .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
+        .nav-links a { color: var(--text-light); text-decoration: none; font-size: 0.95rem; font-weight: 600; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent-gold); }
+
+        /* القائمة المنسدلة */
+        .dropdown { position: relative; }
+        .dropdown-menu {
+            display: none; position: absolute; top: 100%; right: 0; background-color: #0b1c11;
+            border: 1px solid rgba(210, 181, 110, 0.3); border-radius: 8px; list-style: none;
+            min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.5); padding: 10px 0;
+        }
+        .dropdown-menu li a { display: block; padding: 10px 20px; color: var(--text-light); font-size: 0.9rem; }
+        .dropdown-menu li a:hover { background-color: var(--bg-card); color: var(--accent-gold); }
+        .dropdown:hover .dropdown-menu { display: block; }
+        .burger { display: pointer; cursor: pointer; color: var(--accent-gold); font-size: 1.5rem; display: none; }
+
+        /* حاوية القراءة وعناصر التحكم */
+        .reader-container { max-width: 900px; margin: 40px auto; padding: 20px; }
+        
+        .control-panel {
+            background-color: var(--bg-card); border: 1px solid rgba(210, 181, 110, 0.2);
+            border-radius: 15px; padding: 20px; display: flex; flex-wrap: wrap;
+            justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 30px;
+        }
+
+        .select-box {
+            font-family: 'Cairo', sans-serif; background-color: var(--bg-dark);
+            color: var(--text-light); border: 1px solid var(--accent-gold);
+            padding: 10px 20px; border-radius: 8px; font-size: 1rem; width: 220px; outline: none;
+        }
+
+        .font-controls { display: flex; gap: 10px; align-items: center; }
+        .font-btn {
+            background-color: var(--bg-dark); color: var(--accent-gold); border: 1px solid var(--accent-gold);
+            width: 40px; height: 40px; border-radius: 8px; cursor: pointer; font-size: 1.2rem;
+            display: flex; align-items: center; justify-content: center; transition: all 0.3s;
+        }
+        .font-btn:hover { background-color: var(--accent-gold); color: var(--bg-dark); }
+
+        /* منطقة عرض آيات القرآن الكريم */
+        .quran-text-card {
+            background-color: #f9f6ee; /* لون ورقي مريح جداً للعين عند القراءة المستمرة */
+            color: #1c1c1c; /* لون خط داكن مريح على الخلفية الورقية */
+            border-radius: 20px; padding: 40px 30px; border: 2px solid var(--accent-gold);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4); text-align: center; min-height: 400px;
+        }
+
+        .surah-title {
+            font-family: 'Amiri', serif; color: #1a5e37; font-size: 2.5rem; margin-bottom: 20px;
+            font-weight: bold; border-bottom: 2px solid var(--accent-gold); padding-bottom: 15px;
+        }
+
+        .basmala { font-family: 'Amiri', serif; font-size: 2rem; color: #1a5e37; margin-bottom: 30px; display: none; }
+
+        .quran-content {
+            font-family: 'Amiri', serif; font-size: 24px; /* حجم الخط الافتراضي */
+            line-height: 2.2; text-align: justify; direction: rtl; text-justify: inter-word;
+        }
+
+        .verse-number {
+            color: #1a5e37; font-weight: bold; font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem; margin: 0 5px; display: inline-block;
+            width: 28px; height: 28px; border: 1px solid #1a5e37; border-radius: 50%;
+            text-align: center; line-height: 26px; background-color: rgba(26, 94, 55, 0.05);
+        }
+
+        .loading { color: var(--accent-gold); font-size: 1.2rem; display: none; }
+
+        footer {
+            text-align: center; padding: 30px 20px; background-color: var(--bg-card);
+            color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(210, 181, 110, 0.15); margin-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; flex-direction: column; position: absolute; top: 75px; left: 0; right: 0;
+                background-color: #0b1c11; padding: 20px; gap: 10px; border-bottom: 2px solid var(--accent-gold);
+                text-align: center;
+            }
+            .nav-links.show { display: flex; }
+            .dropdown-menu { position: relative; top: 0; width: 100%; box-shadow: none; border: none; display: none; }
+            .dropdown.open .dropdown-menu { display: block; }
+            .burger { display: block; }
+            .control-panel { flex-direction: column; width: 100%; }
+            .select-box { width: 100%; }
+            .quran-text-card { padding: 25px 15px; }
+            .surah-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon"><i class="fa-solid fa-book-quran"></i></div>
+                القرآن الكريم
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li class="dropdown id="quranDropdown"">
+                    <a href="#" class="active" onclick="toggleDropdown(event)">القرآن الكريم <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; margin-right: 3px;"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="quran.html">استماع للمصحف</a></li>
+                        <li><a href="read.html">قراءة المصحف</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html">عن المشروع</a></li>
+                <li><a href="contact.html">اتصل بنا</a></li>
+            </ul>
+            <div class="burger" onclick="toggleNav()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="reader-container">
+        <div class="control-panel">
+            <div>
+                <label for="surahSelect" style="font-size: 0.9rem; color: var(--text-muted); display: block; margin-bottom: 5px;"> اختر السورة الكريمة:</label>
+                <select id="surahSelect" class="select-box" onchange="loadSurah(this.value)">
+                    </select>
+            </div>
+            
+            <div class="font-controls">
+                <span style="font-size: 0.9rem; color: var(--text-muted);">حجم الخط:</span>
+                <button class="font-btn" onclick="changeFontSize(2)"><i class="fa-solid fa-plus"></i></button>
+                <button class="font-btn" onclick="changeFontSize(-2)"><i class="fa-solid fa-minus"></i></button>
+            </div>
+        </div>
+
+        <div class="quran-text-card">
+            <div id="loadingText" class="loading"><i class="fa-solid fa-spinner fa-spin"></i> جاري تحميل السورة المباركة...</div>
+            <div id="surahTitle" class="surah-title">سُورَةُ الفَاتِحَةِ</div>
+            <div id="basmala" class="basmala">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+            <div id="quranContent" class="quran-content">
+                </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>إن أريد إلا الإصلاح ما استطعت وما توفيقي إلا بالله</p>
+        <p style="margin-top: 8px; color: var(--accent-gold); font-size: 0.8rem;">هذا المشروع صدقة جارية ® 2026</p>
+    </footer>
+
+    <script>
+        function toggleNav() { document.getElementById('navLinks').classList.toggle('show'); }
+        function toggleDropdown(event) {
+            if (window.innerWidth <= 768) {
+                event.preventDefault();
+                document.getElementById('quranDropdown').classList.toggle('open');
+            }
+        }
+
+        // مصفوفة أسماء الـ 114 سورة لملء القائمة المنسدلة
+        const surahNames = [
+            "الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود",
+            "يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون",
+            "النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ",
+            "فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف",
+            "محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة",
+            "الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة",
+            "المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس",
+            "التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد",
+            "الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة",
+            "التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص",
+            "الفلق","الناس"
+        ];
+
+        // ملء قائمة الاختيار بالـ 114 سورة فور تحميل الصفحة
+        const selectEl = document.getElementById('surahSelect');
+        surahNames.forEach((name, index) => {
+            let option = document.createElement('option');
+            option.value = index + 1;
+            option.textContent = `${index + 1}. سورة ${name}`;
+            selectEl.appendChild(option);
+        });
+
+        // دالة جلب آيات السورة من الـ API المجاني خفيف البيانات
+        async function loadSurah(surahNumber) {
+            const loading = document.getElementById('loadingText');
+            const content = document.getElementById('quranContent');
+            const title = document.getElementById('surahTitle');
+            const basmala = document.getElementById('basmala');
+
+            loading.style.display = 'block';
+            content.innerHTML = '';
+            basmala.style.display = 'none';
+
+            try {
+                // جلب بيانات السورة نصياً بالرسم العثماني المريح
+                const response = await fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}`);
+                const data = await response.json();
+                const surah = data.data;
+
+                title.textContent = `سُورَةُ ${surah.name}`;
+                
+                let text = '';
+                let startingAyah = 0;
+
+                // التعامل مع البسملة عدا الفاتحة والتوبة
+                if (surahNumber != 1 && surahNumber != 9) {
+                    basmala.style.display = 'block';
+                    // إزالة البسملة من الآية الأولى إذا كانت مدمجة في الـ API
+                    if (surah.ayahs[0].text.includes("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ")) {
+                        let firstAyahText = surah.ayahs[0].text.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "").trim();
+                        text += firstAyahText + ` <span class="verse-number">١</span> `;
+                        startingAyah = 1;
+                    }
+                }
+
+                // دمج الآيات مع الأرقام الفخمة المتصلة
+                for (let i = startingAyah; i < surah.ayahs.length; i++) {
+                    text += surah.ayahs[i].text + ` <span class="verse-number">${surah.ayahs[i].numberInSurah}</span> `;
+                }
+
+                content.innerHTML = text;
+            } catch (error) {
+                content.innerHTML = '<p style="color:red; text-align:center;">عذراً، حدث خطأ أثناء تحميل السورة. يرجى التحقق من الاتصال بالإنترنت والمحاولة مجدداً.</p>';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // دالة التحكم في حجم خط القراءة
+        let currentSize = 24;
+        function changeFontSize(amount) {
+            currentSize += amount;
+            if (currentSize < 16) currentSize = 16;
+            if (currentSize > 48) currentSize = 48;
+            document.getElementById('quranContent').style.fontSize = `${currentSize}px`;
+        }
+
+        // تحميل سورة الفاتحة افتراضياً عند فتح الصفحة لأول مرة
+        window.onload = () => { loadSurah(1); };
+    </script>
+</body>
+</html>
