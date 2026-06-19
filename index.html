@@ -1,432 +1,386 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TY6ZGKB8WK"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TY6ZGKB8WK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date()); gtag('config', 'G-TY6ZGKB8WK');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="منصة المصحف الإلكتروني التفاعلي — استمع وتدبر آيات القرآن الكريم بصوت الشيخ محمد اللحيدان">
+  <title>منصة القرآن الكريم | صدقة جارية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Hero ── */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        linear-gradient(180deg, rgba(10,26,15,0.6) 0%, rgba(10,26,15,0.95) 100%),
+        url('https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=1800&auto=format&fit=crop')
+        center/cover no-repeat;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 820px; padding: 0 24px; }
 
-      gtag('config', 'G-TY6ZGKB8WK');
-    </script>
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.35);
+      border-radius: 50px; padding: 6px 20px;
+      color: var(--gold); font-size: 0.85rem; font-weight: 600;
+      margin-bottom: 28px; animation: fadeDown 0.8s ease both;
+    }
+    .hero-badge i { font-size: 0.75rem; }
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة القرآن الكريم | صدقة جارية</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Amiri:ital@0;1&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --primary-green: #1a5e37; /* أخضر زمردي */
-            --accent-gold: #d2b56e;    /* ذهبي دافئ */
-            --bg-dark: #0b1c11;       /* خلفية داكنة */
-            --bg-card: #143522;       /* كروت زمردية */
-            --text-light: #e8f3ee;    
-            --text-muted: #9fa8a3;    
-        }
+    .hero h1 {
+      font-family: 'Amiri', serif; font-size: clamp(2.6rem, 6vw, 4.8rem);
+      color: var(--gold); line-height: 1.2; margin-bottom: 18px;
+      animation: fadeDown 0.9s 0.1s ease both;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    .hero-verse {
+      font-family: 'Amiri', serif; font-size: 1.35rem;
+      color: rgba(238,244,240,0.75); margin-bottom: 14px;
+      animation: fadeDown 0.9s 0.2s ease both;
+    }
+    .hero p {
+      color: var(--text-soft); font-size: 1.05rem; margin-bottom: 40px;
+      max-width: 600px; margin-left: auto; margin-right: auto;
+      animation: fadeDown 0.9s 0.3s ease both;
+    }
+    .hero-btns {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+      animation: fadeDown 0.9s 0.4s ease both;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    .scroll-hint {
+      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      color: var(--text-soft); font-size: 0.8rem; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      animation: float 2s ease-in-out infinite;
+    }
+    .scroll-hint i { font-size: 1.2rem; color: var(--gold); }
 
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.8;
-        }
+    /* ── إحصائيات بطاقات ── */
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--gold-border);
+      border: 1px solid var(--gold-border); border-radius: var(--radius-lg);
+      overflow: hidden; max-width: 800px; margin: 0 auto 80px;
+    }
+    .stat-item {
+      background: var(--green-card); padding: 28px 20px; text-align: center;
+    }
+    .stat-num {
+      font-family: 'Amiri', serif; font-size: 2.6rem;
+      color: var(--gold); line-height: 1;
+    }
+    .stat-label { color: var(--text-soft); font-size: 0.88rem; margin-top: 6px; }
 
-        /* شريط التنقل (Navbar) */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background-color: #0b1c11; 
-            border-bottom: 1px solid rgba(210, 181, 110, 0.3);
-            z-index: 1000;
-            height: 75px;
-        }
+    /* ── ميزات ── */
+    .features-section {
+      max-width: 1200px; margin: 0 auto; padding: 80px 24px;
+      position: relative; z-index: 1;
+    }
+    .features-header { text-align: center; margin-bottom: 60px; }
 
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            height: 100%;
-        }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--green-card);
+      border: 1px solid var(--gold-border);
+      border-radius: var(--radius-lg); padding: 36px 28px;
+      transition: var(--transition); position: relative; overflow: hidden;
+    }
+    .feature-card::before {
+      content: ''; position: absolute; top: 0; right: 0;
+      width: 80px; height: 80px;
+      background: radial-gradient(circle at top right, rgba(201,168,76,0.12), transparent 70%);
+    }
+    .feature-card:hover { border-color: var(--gold); transform: translateY(-6px); }
 
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--accent-gold);
-            text-decoration: none;
-            font-family: 'Amiri', serif;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
+    .feature-icon-wrap {
+      width: 56px; height: 56px; border-radius: var(--radius-md);
+      background: var(--gold-dim); border: 1px solid var(--gold-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-size: 1.4rem; margin-bottom: 20px;
+    }
+    .feature-card h3 { font-size: 1.15rem; color: var(--text); margin-bottom: 10px; }
+    .feature-card p { color: var(--text-soft); font-size: 0.92rem; }
 
-        .nav-logo-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            border: 2px solid var(--accent-gold);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--bg-card);
-            color: var(--accent-gold);
-            font-size: 1.2rem;
-        }
+    /* ── منصات التواصل ── */
+    .social-section {
+      max-width: 900px; margin: 0 auto; padding: 0 24px 100px;
+      position: relative; z-index: 1; text-align: center;
+    }
+    .social-grid {
+      display: flex; gap: 20px; justify-content: center;
+      flex-wrap: wrap; margin-top: 40px;
+    }
+    .social-card {
+      background: var(--green-card);
+      border: 1px solid var(--gold-border);
+      border-radius: var(--radius-lg);
+      padding: 28px 40px;
+      display: flex; align-items: center; gap: 18px;
+      text-decoration: none; color: var(--text);
+      min-width: 270px; transition: var(--transition);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .social-card i { font-size: 2.2rem; transition: var(--transition); }
+    .social-info h4 { font-size: 1.05rem; font-weight: 700; }
+    .social-info p { font-size: 0.82rem; color: var(--text-soft); margin-top: 2px; }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-        }
+    .card-yt:hover { border-color: #ff0000; background: rgba(255,0,0,0.04); transform: translateY(-4px); }
+    .card-yt:hover i { color: #ff0000; transform: scale(1.1); }
+    .card-tg:hover { border-color: #0088cc; background: rgba(0,136,204,0.04); transform: translateY(-4px); }
+    .card-tg:hover i { color: #0088cc; transform: scale(1.1); }
 
-        .nav-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
+    /* ── آية منتصف الصفحة ── */
+    .verse-divider {
+      text-align: center; padding: 70px 24px;
+      background: linear-gradient(180deg, transparent, var(--green-mid), transparent);
+      position: relative; z-index: 1;
+    }
+    .verse-divider p {
+      font-family: 'Amiri', serif; font-size: clamp(1.4rem, 3vw, 2rem);
+      color: var(--gold); max-width: 700px; margin: 0 auto 10px;
+    }
+    .verse-divider small { color: var(--text-soft); font-size: 0.88rem; }
 
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--accent-gold);
-        }
+    /* ── انيميشن ── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(-8px); }
+    }
 
-        .burger {
-            display: none;
-            cursor: pointer;
-            color: var(--accent-gold);
-            font-size: 1.5rem;
-            padding: 5px;
-        }
-
-        /* الواجهة الترحيبية الكبرى (Hero Section) */
-        .hero {
-            position: relative;
-            height: 100vh;
-            min-height: 600px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background-size: cover;
-            background-position: center;
-            background-image: linear-gradient(rgba(11, 28, 17, 0.8), rgba(11, 28, 17, 0.85)), url('https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=1500&auto=format&fit=crop');
-        }
-
-        .hero-content {
-            max-width: 850px;
-            padding: 0 20px;
-            z-index: 10;
-        }
-
-        .hero h1 {
-            font-family: 'Amiri', serif;
-            font-size: 4rem;
-            color: var(--accent-gold);
-            margin-bottom: 15px;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-
-        .hero p {
-            color: var(--text-light);
-            font-size: 1.3rem;
-            margin-bottom: 35px;
-            font-weight: 300;
-        }
-
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background-color: var(--accent-gold);
-            color: #0b1c11;
-            padding: 16px 40px;
-            font-size: 1.15rem;
-            font-weight: 700;
-            text-decoration: none;
-            border-radius: 50px;
-            box-shadow: 0 10px 20px rgba(210, 181, 110, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px rgba(210, 181, 110, 0.5);
-            background-color: #fff;
-        }
-
-        /* قسم التعريف بالمشروع (Features Section) */
-        .about-brief {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 20px 40px 20px;
-            text-align: center;
-        }
-
-        .section-title {
-            font-family: 'Amiri', serif;
-            color: var(--accent-gold);
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
-        .section-subtitle {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            margin-bottom: 40px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            background-color: var(--bg-card);
-            padding: 40px 25px;
-            border-radius: 15px;
-            border: 1px solid rgba(210, 181, 110, 0.1);
-            transition: transform 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-gold);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--accent-gold);
-            margin-bottom: 20px;
-        }
-
-        .feature-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            color: var(--text-light);
-        }
-
-        .feature-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* قسم منصات التواصل الاجتماعي */
-        .social-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px 80px 20px;
-            text-align: center;
-        }
-
-        .social-grid {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-
-        .social-card {
-            background-color: var(--bg-card);
-            border: 1px solid rgba(210, 181, 110, 0.15);
-            padding: 25px 40px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            text-decoration: none;
-            color: var(--text-light);
-            min-width: 280px;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .social-card i {
-            font-size: 2.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .social-info {
-            text-align: right;
-        }
-
-        .social-info h4 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 3px;
-        }
-
-        .social-info p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* تأثيرات الحوام الخاصة بكل منصة */
-        .card-youtube:hover {
-            border-color: #ff0000;
-            background-color: rgba(255, 0, 0, 0.05);
-            transform: translateY(-3px);
-        }
-        .card-youtube:hover i {
-            color: #ff0000;
-            transform: scale(1.1);
-        }
-
-        .card-telegram:hover {
-            border-color: #0088cc;
-            background-color: rgba(0, 136, 204, 0.05);
-            transform: translateY(-3px);
-        }
-        .card-telegram:hover i {
-            color: #0088cc;
-            transform: scale(1.1);
-        }
-
-        /* الفوتر (Footer) */
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            background-color: var(--bg-card);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(210, 181, 110, 0.15);
-        }
-
-        /* التوافق التام مع الهواتف */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 75px;
-                left: 0;
-                right: 0;
-                background-color: #0b1c11; 
-                padding: 30px;
-                gap: 20px;
-                border-bottom: 2px solid var(--accent-gold);
-                text-align: center;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            }
-            .nav-links.show { display: flex; }
-            .burger { display: block; }
-            .hero h1 { font-size: 2.5rem; }
-            .hero p { font-size: 1.05rem; }
-            .cta-button { padding: 14px 32px; font-size: 1rem; }
-            .social-card { width: 100%; }
-        }
-    </style>
+    @media (max-width: 768px) {
+      .stats-bar { grid-template-columns: 1fr; }
+      .social-card { width: 100%; min-width: unset; }
+      .hero-btns { flex-direction: column; align-items: center; }
+    }
+  </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo">
-                <div class="nav-logo-icon">
-                    <i class="fa-solid fa-book-quran"></i>
-                </div>
-                القرآن الكريم
-            </a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html" class="active">الرئيسية</a></li>
-                <li><a href="quran.html">الاستماع للقرآن</a></li>
-                <li><a href="about.html">عن المشروع</a></li>
-                <li><a href="contact.html">اتصل بنا</a></li>
-            </ul>
-            <div class="burger" onclick="toggleNav()">
-                <i class="fa-solid fa-bars"></i>
-            </div>
-        </div>
-    </nav>
+<canvas id="particles-canvas"></canvas>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>مَنصَّة القُرآن الكَرِيم</h1>
-            <p>رتل وتدبر آيات كتاب الله جل وعلا بصوت الشيخ محمد اللحيدان، مبوبة ومقسمة بطريقة تفاعلية حديثة وسهلة الاستخدام.</p>
-            <a href="quran.html" class="cta-button" onclick="gtag('event', 'click_hero_cta', {'event_category': 'Engagement'});">
-                إضغط هنا لسماع القرآن الكريم
-                <i class="fa-solid fa-circle-play"></i>
-            </a>
-        </div>
-    </section>
+<!-- شريط التنقل -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon"><i class="fa-solid fa-book-quran"></i></div>
+      القرآن الكريم
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active">الرئيسية</a></li>
+      <li class="dropdown" id="quranDropdown">
+        <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">
+          القرآن الكريم <i class="fa-solid fa-chevron-down chevron"></i>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="quran.html"><i class="fa-solid fa-headphones" style="color:var(--gold);margin-left:8px"></i> استماع للمصحف</a></li>
+          <li><a href="read.html"><i class="fa-solid fa-book-open" style="color:var(--gold);margin-left:8px"></i> قراءة المصحف</a></li>
+        </ul>
+      </li>
+      <li><a href="about.html">عن المشروع</a></li>
+      <li><a href="contact.html">اتصل بنا</a></li>
+    </ul>
+    <button class="burger" onclick="toggleNav()" aria-label="القائمة">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</nav>
 
-    <section class="about-brief">
-        <h2 class="section-title">عن المشروع ورسالته</h2>
-        <p class="section-subtitle">خطوات ثابتة نحو نشر كلام الله تبارك وتعالى رقمياً</p>
-        <div class="features-grid">
-            
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-solid fa-volume-high"></i></div>
-                <h3>تلاوة متميزة</h3>
-                <p>مصحف مرتل كامل بجودة صوتية نقية بصوت القارئ الشيخ محمد اللحيدان للتدبر والخشوع.</p>
-            </div>
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <i class="fa-solid fa-star-and-crescent"></i>
+      صدقة جارية لعام 2026
+    </div>
+    <h1>مَنصَّة القُرآن الكَرِيم</h1>
+    <div class="hero-verse">
+      ﴿ وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا ﴾
+    </div>
+    <p>رتّل وتدبّر آيات كتاب الله بصوت الشيخ محمد اللحيدان، في تجربة استماع نقية بعيدة عن الإعلانات والتشتيت.</p>
+    <div class="hero-btns">
+      <a href="quran.html" class="btn btn-gold" onclick="gtag('event','click_hero_listen',{'event_category':'Engagement'})">
+        <i class="fa-solid fa-circle-play"></i>
+        ابدأ الاستماع الآن
+      </a>
+      <a href="read.html" class="btn btn-outline">
+        <i class="fa-solid fa-book-open"></i>
+        قراءة المصحف
+      </a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>تمرير للأسفل</span>
+    <i class="fa-solid fa-chevron-down"></i>
+  </div>
+</section>
 
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-solid fa-list-ol"></i></div>
-                <h3>الفهرس التفاعلي</h3>
-                <p>تنقل مرن ومباشر بين السور الـ 114 بنقرة زر واحدة تتيح لك اختيار وجهتك بدقة.</p>
-            </div>
+<!-- إحصائيات -->
+<section style="max-width:1200px;margin:0 auto;padding:60px 24px 20px;position:relative;z-index:1">
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num">١١٤</div>
+      <div class="stat-label">سورة مباركة</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">٦٢٣٦</div>
+      <div class="stat-label">آية قرآنية</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">١٠٠٪</div>
+      <div class="stat-label">مجاني وبلا إعلانات</div>
+    </div>
+  </div>
+</section>
 
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-solid fa-heart"></i></div>
-                <h3>صدقة جارية</h3>
-                <p>نسأل الله العلي القدير أن يكتب هذا العمل صدقة جارية، وأن يتقبله خالصاً لوجهه الكريم.</p>
-            </div>
+<!-- ميزات -->
+<section class="features-section">
+  <div class="features-header">
+    <div class="section-label">رسالة المنصة</div>
+    <h2 class="section-title">لماذا هذه المنصة؟</h2>
+    <p class="section-sub">صُمّمت كل تفصيلة هنا لتكون خدمةً لكتاب الله وتيسيراً للمسلمين في كل مكان</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon-wrap"><i class="fa-solid fa-volume-high"></i></div>
+      <h3>تلاوة خاشعة</h3>
+      <p>مصحف مرتل كامل الـ 114 سورة بجودة صوتية نقية بصوت الشيخ محمد اللحيدان، للتدبر والخشوع والطمأنينة.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon-wrap"><i class="fa-solid fa-book-open"></i></div>
+      <h3>قراءة المصحف</h3>
+      <p>اقرأ آيات القرآن الكريم كاملاً بالرسم العثماني مباشرةً في المتصفح، مع التحكم في حجم الخط وسهولة التنقل.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon-wrap"><i class="fa-solid fa-cloud-arrow-down"></i></div>
+      <h3>تحميل ذكي</h3>
+      <p>حمّل أي سورة مباشرةً بالاسم العربي والإنجليزي ورقمها لتسهيل الأرشفة والتنظيم على جهازك.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon-wrap"><i class="fa-solid fa-moon"></i></div>
+      <h3>تشغيل في الخلفية</h3>
+      <p>استمع للسور المباركة وأغلق الشاشة أو انتقل لتطبيق آخر — التلاوة تستمر معك بلا انقطاع.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon-wrap"><i class="fa-solid fa-bolt"></i></div>
+      <h3>خفيف وسريع</h3>
+      <p>موقع بلا إعلانات ولا تتبع مزعج، مبني بأبسط التقنيات لأسرع تحميل حتى على شبكات الجوال الضعيفة.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon-wrap"><i class="fa-solid fa-heart"></i></div>
+      <h3>صدقة جارية</h3>
+      <p>نسأل الله أن يكتب لكل من استمع وشارك ونشر هذا المشروع أجراً جارياً لا ينقطع بإذن الله تعالى.</p>
+    </div>
+  </div>
+</section>
 
-        </div>
-    </section>
+<!-- آية وسطى -->
+<div class="verse-divider">
+  <p>﴿ إِنَّ هَٰذَا الْقُرْآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ ﴾</p>
+  <small>سورة الإسراء — آية 9</small>
+</div>
 
-    <section class="social-section">
-        <h2 class="section-title">تابع منصاتنا الرسمية</h2>
-        <p class="section-subtitle">كن جزءاً من نشر الخير والدال على الخير كفاعله</p>
-        
-        <div class="social-grid">
-            
-            <a href="https://youtube.com/@quran_kareem.sadaqa?si=yBHvt0JKpEq_xDDN" target="_blank" class="social-card card-youtube" onclick="gtag('event', 'click_social_youtube', {'event_category': 'Outbound Links'});">
-                <i class="fa-brands fa-youtube" style="color: var(--text-light);"></i>
-                <div class="social-info">
-                    <h4>قناة اليوتيوب</h4>
-                    <p>اشترك لمشاهدة المقاطع المترجمة</p>
-                </div>
-            </a>
+<!-- منصات التواصل -->
+<section class="social-section">
+  <div class="section-label">منصاتنا الرسمية</div>
+  <h2 class="section-title">تابعنا وشارك الخير</h2>
+  <p class="section-sub">كن جزءاً من نشر كلام الله — الدال على الخير كفاعله</p>
+  <div class="social-grid">
+    <a href="https://youtube.com/@quran_kareem.sadaqa" target="_blank" class="social-card card-yt" onclick="gtag('event','click_youtube',{'event_category':'Outbound'})">
+      <i class="fa-brands fa-youtube"></i>
+      <div class="social-info">
+        <h4>قناة اليوتيوب</h4>
+        <p>تلاوات مرئية عالية الجودة</p>
+      </div>
+    </a>
+    <a href="https://t.me/Quran_Kareem_Sadaqa" target="_blank" class="social-card card-tg" onclick="gtag('event','click_telegram',{'event_category':'Outbound'})">
+      <i class="fa-brands fa-telegram"></i>
+      <div class="social-info">
+        <h4>قناة التليجرام</h4>
+        <p>تحميل التلاوات الصوتية</p>
+      </div>
+    </a>
+  </div>
+</section>
 
-            <a href="https://t.me/Quran_Kareem_Sadaqa" target="_blank" class="social-card card-telegram" onclick="gtag('event', 'click_social_telegram', {'event_category': 'Outbound Links'});">
-                <i class="fa-brands fa-telegram" style="color: var(--text-light);"></i>
-                <div class="social-info">
-                    <h4>قناة التليجرام</h4>
-                    <p>انضم لتحميل التلاوات الصوتية</p>
-                </div>
-            </a>
+<footer>
+  <div class="footer-verse">إن أريد إلا الإصلاح ما استطعت وما توفيقي إلا بالله</div>
+  <p>منصة القرآن الكريم — مشروع خيري غير ربحي</p>
+  <div class="footer-copy">صدقة جارية ® 2026</div>
+</footer>
 
-        </div>
-    </section>
+<script>
+  // جزيئات عائمة
+  (function(){
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
 
-    <footer>
-        <p>إن أريد إلا الإصلاح ما استطعت وما توفيقي إلا بالله</p>
-        <p style="margin-top: 8px; color: var(--accent-gold); font-size: 0.8rem;">هذا المشروع صدقة جارية ® 2026</p>
-    </footer>
+    function resize(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+    resize(); window.addEventListener('resize', resize);
 
-    <script>
-        function toggleNav() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('show');
-        }
-    </script>
+    function randomParticle(){
+      return {
+        x: Math.random() * W, y: H + Math.random() * 200,
+        r: Math.random() * 2.5 + 0.5,
+        speed: Math.random() * 0.6 + 0.3,
+        alpha: Math.random() * 0.5 + 0.2,
+        dx: (Math.random() - 0.5) * 0.4
+      };
+    }
+
+    for(let i = 0; i < 60; i++){
+      let p = randomParticle(); p.y = Math.random() * H;
+      particles.push(p);
+    }
+
+    function draw(){
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(201,168,76,${p.alpha})`;
+        ctx.fill();
+        p.y -= p.speed; p.x += p.dx;
+        if(p.y < -10) Object.assign(p, randomParticle());
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  // التنقل
+  function toggleNav(){
+    document.getElementById('navLinks').classList.toggle('show');
+  }
+  function toggleDropdown(e){
+    if(window.innerWidth <= 768){
+      e.preventDefault();
+      document.getElementById('quranDropdown').classList.toggle('open');
+    }
+  }
+</script>
 </body>
 </html>
