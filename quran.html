@@ -200,6 +200,75 @@
       .quran-layout { grid-template-columns: 1fr; }
       .player-box { position: static; }
     }
+
+    /* ── تبويبات استماع / مشاهدة ── */
+    .mode-tabs {
+      max-width: 420px; margin: 28px auto 0;
+      display: flex; background: var(--green-card);
+      border: 1px solid var(--gold-border); border-radius: 50px;
+      padding: 5px; position: relative; z-index: 1;
+    }
+    .mode-tab {
+      flex: 1; text-align: center; padding: 11px 18px;
+      border-radius: 50px; cursor: pointer; user-select: none;
+      font-weight: 700; font-size: 0.92rem; color: var(--text-soft);
+      transition: var(--transition); display: flex; align-items: center;
+      justify-content: center; gap: 8px; background: none; border: none;
+      font-family: 'Cairo', sans-serif;
+    }
+    .mode-tab.active { background: var(--gold); color: var(--green-deep); }
+    .mode-tab:not(.active):hover { color: var(--gold); }
+
+    .mode-panel { display: none; }
+    .mode-panel.active { display: block; }
+
+    /* ── قسم الفيديو ── */
+    .video-layout {
+      max-width: 1200px; margin: 36px auto;
+      padding: 0 24px 80px;
+      display: grid; grid-template-columns: 1.5fr 1fr;
+      gap: 28px; align-items: start;
+    }
+    .video-box {
+      background: var(--green-card);
+      border: 1px solid var(--gold-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      position: sticky; top: calc(var(--nav-h) + 20px);
+    }
+    .video-frame-wrap {
+      position: relative; width: 100%;
+      padding-bottom: 56.25%; /* نسبة 16:9 */
+      background: #000;
+    }
+    .video-frame-wrap iframe {
+      position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+    }
+    .video-meta {
+      padding: 20px 24px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .video-meta i { color: var(--gold); font-size: 1.3rem; }
+    .video-meta-text h3 {
+      font-family: 'Amiri', serif; color: var(--text); font-size: 1.25rem;
+    }
+    .video-meta-text p { color: var(--text-soft); font-size: 0.85rem; margin-top: 2px; }
+
+    .video-index-box {
+      background: var(--green-card);
+      border: 1px solid var(--gold-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow); overflow: hidden;
+    }
+
+    @media (max-width: 900px) {
+      .video-layout { grid-template-columns: 1fr; }
+      .video-box { position: static; }
+    }
+    @media (max-width: 480px) {
+      .mode-tabs { margin: 24px 16px 0; max-width: none; }
+    }
   </style>
 </head>
 <body class="page-body">
@@ -239,8 +308,18 @@
   <p>الشيخ محمد اللحيدان — ١١٤ سورة مرتلة كاملة، استماع في الخلفية وتحميل مباشر</p>
 </div>
 
-<!-- التخطيط الرئيسي -->
-<div class="quran-layout">
+<!-- تبويبات استماع / مشاهدة -->
+<div class="mode-tabs">
+  <button class="mode-tab active" id="tabAudio" onclick="switchMode('audio')">
+    <i class="fa-solid fa-headphones"></i> استماع صوتي
+  </button>
+  <button class="mode-tab" id="tabVideo" onclick="switchMode('video')">
+    <i class="fa-brands fa-youtube"></i> مشاهدة فيديو
+  </button>
+</div>
+
+<!-- التخطيط الرئيسي (صوت) -->
+<div class="quran-layout mode-panel active" id="panelAudio">
 
   <!-- المشغل -->
   <div class="player-box" id="main-player">
@@ -294,6 +373,42 @@
       <input type="text" id="searchInput" placeholder="ابحث عن سورة..." oninput="filterSurahs()">
     </div>
     <div class="surah-list" id="surahList"></div>
+  </div>
+
+</div>
+
+<!-- التخطيط الرئيسي (فيديو) -->
+<div class="video-layout mode-panel" id="panelVideo">
+
+  <!-- مشغل الفيديو -->
+  <div class="video-box">
+    <div class="video-frame-wrap">
+      <iframe id="ytFrame"
+        src="https://www.youtube.com/embed/videoseries?list=PLNGi9Z7RkAp0sYYCpnMjjc19Utn82z0oM&index=0"
+        title="مشغل القرآن الكريم"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <div class="video-meta">
+      <i class="fa-brands fa-youtube"></i>
+      <div class="video-meta-text">
+        <h3>قائمة تشغيل القرآن الكريم</h3>
+        <p>قناة قرآن كريم — ١١٤ سورة مرئية كاملة</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- فهرس الفيديو -->
+  <div class="video-index-box">
+    <div class="index-header">
+      <h2>فهرس السور (فيديو)</h2>
+    </div>
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="searchInputVideo" placeholder="ابحث عن سورة..." oninput="filterSurahsVideo()">
+    </div>
+    <div class="surah-list" id="surahListVideo"></div>
   </div>
 
 </div>
@@ -438,7 +553,70 @@
   window.onload = () => {
     buildList();
     loadAudio(0);
+    buildVideoList();
   };
+
+  // ── التبديل بين استماع/مشاهدة ──
+  let ytLoaded = false;
+  const YT_PLAYLIST = "PLNGi9Z7RkAp0sYYCpnMjjc19Utn82z0oM";
+
+  function switchMode(mode){
+    const isAudio = mode === 'audio';
+    document.getElementById('tabAudio').classList.toggle('active', isAudio);
+    document.getElementById('tabVideo').classList.toggle('active', !isAudio);
+    document.getElementById('panelAudio').classList.toggle('active', isAudio);
+    document.getElementById('panelVideo').classList.toggle('active', !isAudio);
+
+    if(isAudio){
+      audio.pause();
+    } else {
+      // إيقاف الصوت تلقائياً عند فتح الفيديو
+      audio.pause();
+      if(!ytLoaded){
+        ytLoaded = true;
+        playVideoIndex(0);
+      }
+    }
+    gtag('event','switch_mode',{'event_category':'Engagement','event_label':mode});
+  }
+
+  function playVideoIndex(idx){
+    const frame = document.getElementById('ytFrame');
+    frame.src = `https://www.youtube.com/embed/videoseries?list=${YT_PLAYLIST}&index=${idx}&autoplay=1`;
+    setActiveVideo(idx);
+    gtag('event','play_video_surah',{'event_category':'Video','event_label':surahAr[idx]});
+    if(window.innerWidth <= 900){
+      document.querySelector('.video-box').scrollIntoView({behavior:'smooth'});
+    }
+  }
+
+  function setActiveVideo(idx){
+    document.querySelectorAll('#surahListVideo .surah-card').forEach(c => c.classList.remove('active'));
+    const el = document.getElementById(`scv-${idx}`);
+    if(el){ el.classList.add('active'); el.scrollIntoView({behavior:'smooth', block:'nearest'}); }
+  }
+
+  function buildVideoList(filter = ''){
+    const list = document.getElementById('surahListVideo');
+    list.innerHTML = '';
+    surahAr.forEach((name, i) => {
+      if(filter && !name.includes(filter)) return;
+      const card = document.createElement('div');
+      card.className = `surah-card${i === 0 ? ' active' : ''}`;
+      card.id = `scv-${i}`;
+      card.innerHTML = `
+        <div class="surah-num">${i+1}</div>
+        <div class="surah-name">سورة ${name}</div>
+        <div class="surah-play"><i class="fa-brands fa-youtube"></i></div>
+      `;
+      card.onclick = () => playVideoIndex(i);
+      list.appendChild(card);
+    });
+  }
+
+  function filterSurahsVideo(){
+    buildVideoList(document.getElementById('searchInputVideo').value.trim());
+  }
 
   // ── جزيئات ──
   (function(){
