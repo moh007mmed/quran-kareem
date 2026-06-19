@@ -242,7 +242,8 @@
       padding-bottom: 56.25%; /* نسبة 16:9 */
       background: #000;
     }
-    .video-frame-wrap iframe {
+    .video-frame-wrap iframe,
+    .video-frame-wrap > div > iframe {
       position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
     }
     .video-meta {
@@ -383,12 +384,7 @@
   <!-- مشغل الفيديو -->
   <div class="video-box">
     <div class="video-frame-wrap">
-      <iframe id="ytFrame"
-        src="https://www.youtube.com/embed/videoseries?list=PLNGi9Z7RkAp0sYYCpnMjjc19Utn82z0oM&index=0"
-        title="مشغل القرآن الكريم"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
+      <div id="ytFrame"></div>
     </div>
     <div class="video-meta">
       <i class="fa-brands fa-youtube"></i>
@@ -557,8 +553,47 @@
   };
 
   // ── التبديل بين استماع/مشاهدة ──
-  let ytLoaded = false;
+  let ytPlayer = null;
+  let ytReady = false;
+  let pendingIndex = 0;
   const YT_PLAYLIST = "PLNGi9Z7RkAp0sYYCpnMjjc19Utn82z0oM";
+
+  // تحميل سكريبت يوتيوب IFrame API
+  (function loadYT(){
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+  })();
+
+  // يستدعيها يوتيوب تلقائياً بعد تحميل الـ API
+  function onYouTubeIframeAPIReady(){
+    ytPlayer = new YT.Player('ytFrame', {
+      host: 'https://www.youtube.com',
+      playerVars: {
+        listType: 'playlist',
+        list: YT_PLAYLIST,
+        index: 0,
+        rel: 0
+      },
+      events: {
+        'onReady': () => {
+          ytReady = true;
+          if(pendingIndex !== 0) ytPlayer.playVideoAt(pendingIndex);
+        },
+        'onStateChange': onYtStateChange
+      }
+    });
+  }
+
+  function onYtStateChange(e){
+    // عند بدء التشغيل، طابق الفهرس مع الفهرس الفعلي من المشغل
+    if(e.data === YT.PlayerState.PLAYING){
+      try {
+        const idx = ytPlayer.getPlaylistIndex();
+        if(typeof idx === 'number' && idx >= 0) setActiveVideo(idx);
+      } catch(err){}
+    }
+  }
 
   function switchMode(mode){
     const isAudio = mode === 'audio';
@@ -567,22 +602,23 @@
     document.getElementById('panelAudio').classList.toggle('active', isAudio);
     document.getElementById('panelVideo').classList.toggle('active', !isAudio);
 
-    if(isAudio){
-      audio.pause();
-    } else {
-      // إيقاف الصوت تلقائياً عند فتح الفيديو
-      audio.pause();
-      if(!ytLoaded){
-        ytLoaded = true;
-        playVideoIndex(0);
-      }
+    audio.pause();
+    if(!isAudio && ytReady){
+      // تأكيد تحديث الفهرس النشط عند فتح التبويب
+      try {
+        const idx = ytPlayer.getPlaylistIndex();
+        if(typeof idx === 'number' && idx >= 0) setActiveVideo(idx);
+      } catch(err){}
     }
     gtag('event','switch_mode',{'event_category':'Engagement','event_label':mode});
   }
 
   function playVideoIndex(idx){
-    const frame = document.getElementById('ytFrame');
-    frame.src = `https://www.youtube.com/embed/videoseries?list=${YT_PLAYLIST}&index=${idx}&autoplay=1`;
+    if(ytReady && ytPlayer && ytPlayer.playVideoAt){
+      ytPlayer.playVideoAt(idx);
+    } else {
+      pendingIndex = idx;
+    }
     setActiveVideo(idx);
     gtag('event','play_video_surah',{'event_category':'Video','event_label':surahAr[idx]});
     if(window.innerWidth <= 900){
