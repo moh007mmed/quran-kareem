@@ -1,0 +1,202 @@
+/* ============================================================
+   المصحف الإلكتروني التفاعلي — الهوية البصرية الموحدة 2026
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  --green-deep:   #0a1a0f;
+  --green-mid:    #0f2518;
+  --green-card:   #152d1e;
+  --green-accent: #1e4530;
+  --gold:         #c9a84c;
+  --gold-light:   #e8c96e;
+  --gold-dim:     rgba(201,168,76,0.18);
+  --gold-border:  rgba(201,168,76,0.28);
+  --text:         #eef4f0;
+  --text-soft:    #8fa898;
+  --white:        #ffffff;
+  --radius-lg:    20px;
+  --radius-md:    12px;
+  --radius-sm:    8px;
+  --nav-h:        72px;
+  --shadow:       0 20px 50px rgba(0,0,0,0.5);
+  --transition:   0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background-color: var(--green-deep);
+  color: var(--text);
+  line-height: 1.8;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── شريط التنقل ── */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: rgba(10,26,15,0.92);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--gold-border);
+  z-index: 1000;
+}
+.nav-container {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; height: 100%;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none; color: var(--gold);
+  font-family: 'Amiri', serif; font-size: 1.45rem; font-weight: 700;
+}
+.nav-logo-icon {
+  width: 42px; height: 42px; border-radius: 50%;
+  border: 1.5px solid var(--gold);
+  background: var(--green-card);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; color: var(--gold);
+  transition: var(--transition);
+}
+.nav-logo:hover .nav-logo-icon { background: var(--gold); color: var(--green-deep); }
+
+.nav-links { display: flex; list-style: none; gap: 8px; align-items: center; }
+.nav-links a {
+  color: var(--text-soft); text-decoration: none;
+  font-size: 0.9rem; font-weight: 600; padding: 6px 14px;
+  border-radius: var(--radius-sm); transition: var(--transition);
+}
+.nav-links a:hover, .nav-links a.active {
+  color: var(--gold);
+  background: var(--gold-dim);
+}
+
+.dropdown { position: relative; }
+.dropdown-toggle { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.dropdown-toggle .chevron { font-size: 0.65rem; transition: transform 0.25s; }
+.dropdown:hover .chevron, .dropdown.open .chevron { transform: rotate(180deg); }
+.dropdown-menu {
+  display: none; position: absolute; top: calc(100% + 8px); right: 0;
+  background: var(--green-mid);
+  border: 1px solid var(--gold-border); border-radius: var(--radius-md);
+  list-style: none; min-width: 190px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+  padding: 8px 0; z-index: 100;
+}
+.dropdown:hover .dropdown-menu { display: block; }
+.dropdown-menu li a {
+  display: block; padding: 10px 18px;
+  color: var(--text-soft); font-size: 0.88rem;
+  transition: var(--transition);
+}
+.dropdown-menu li a:hover { color: var(--gold); background: var(--gold-dim); }
+
+.burger {
+  display: none; cursor: pointer;
+  color: var(--gold); font-size: 1.4rem; padding: 6px;
+  background: none; border: none;
+}
+
+/* ── الفوتر ── */
+footer {
+  background: var(--green-card);
+  border-top: 1px solid var(--gold-border);
+  text-align: center;
+  padding: 36px 20px;
+  color: var(--text-soft); font-size: 0.88rem;
+}
+footer .footer-verse {
+  font-family: 'Amiri', serif; font-size: 1.05rem;
+  color: var(--gold); margin-bottom: 8px;
+}
+footer .footer-copy { color: var(--gold); font-size: 0.78rem; margin-top: 6px; }
+
+/* ── حاوية الصفحة ── */
+.page-body { padding-top: var(--nav-h); }
+
+/* ── عنوان القسم العام ── */
+.section-label {
+  display: inline-block;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--gold);
+  background: var(--gold-dim); border: 1px solid var(--gold-border);
+  border-radius: 50px; padding: 4px 16px; margin-bottom: 14px;
+}
+.section-title {
+  font-family: 'Amiri', serif; font-size: 2.4rem;
+  color: var(--gold); line-height: 1.3; margin-bottom: 12px;
+}
+.section-sub { color: var(--text-soft); font-size: 1rem; }
+
+/* ── بطاقة عامة ── */
+.card {
+  background: var(--green-card);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+.card:hover { border-color: var(--gold); transform: translateY(-4px); }
+
+/* ── زر أساسي ── */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'Cairo', sans-serif; font-weight: 700;
+  border-radius: 50px; border: none; cursor: pointer;
+  text-decoration: none; transition: var(--transition);
+}
+.btn-gold {
+  background: var(--gold); color: var(--green-deep);
+  padding: 14px 36px; font-size: 1.05rem;
+  box-shadow: 0 8px 24px rgba(201,168,76,0.35);
+}
+.btn-gold:hover {
+  background: var(--gold-light);
+  box-shadow: 0 12px 32px rgba(201,168,76,0.5);
+  transform: translateY(-2px);
+}
+.btn-outline {
+  background: transparent; color: var(--gold);
+  border: 1.5px solid var(--gold);
+  padding: 10px 24px; font-size: 0.95rem;
+}
+.btn-outline:hover { background: var(--gold); color: var(--green-deep); }
+
+/* ── شريط نبض ── */
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(201,168,76,0.45); }
+  70%  { box-shadow: 0 0 0 14px rgba(201,168,76,0); }
+  100% { box-shadow: 0 0 0 0 rgba(201,168,76,0); }
+}
+
+/* ── جزيئات عائمة ── */
+#particles-canvas {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.55;
+}
+
+/* ── توافق الهاتف ── */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; flex-direction: column; position: absolute;
+    top: var(--nav-h); left: 0; right: 0;
+    background: var(--green-deep);
+    padding: 20px 16px; gap: 4px;
+    border-bottom: 2px solid var(--gold);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+  }
+  .nav-links.show { display: flex; }
+  .burger { display: block; }
+  .dropdown-menu {
+    position: static; box-shadow: none;
+    border: none; background: transparent;
+    padding: 0; display: none;
+  }
+  .dropdown.open .dropdown-menu { display: block; }
+  .section-title { font-size: 1.9rem; }
+}
